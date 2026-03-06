@@ -1,0 +1,409 @@
+.main-dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f4f8;
+}
+
+.top-bar {
+  background: linear-gradient(to right, #1a5490 0%, #3b7fc4 100%);
+  color: #fff;
+  padding: 28px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.top-bar h1 {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.greeting {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.exit-btn {
+  padding: 14px 28px;
+  font-size: 19px;
+  font-weight: 700;
+  background: #fff;
+  color: #1a5490;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.exit-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+.content-area {
+  flex: 1;
+  padding: 36px 24px;
+  max-width: 850px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.account-summary {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20px;
+  padding: 44px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 36px;
+  border: 3px solid #e8ecf0;
+}
+
+.summary-title {
+  font-size: 24px;
+  color: #555;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.summary-value {
+  font-size: 60px;
+  font-weight: 900;
+  color: #1a5490;
+  margin-bottom: 12px;
+  letter-spacing: -1px;
+}
+
+.summary-note {
+  font-size: 20px;
+  color: #888;
+}
+
+.action-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.feature-btn {
+  background: #fff;
+  border: 3px solid #d0d7de;
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.feature-btn:hover {
+  border-color: #1a5490;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(26, 84, 144, 0.2);
+}
+
+.feature-emoji {
+  font-size: 44px;
+}
+
+.feature-label {
+  font-size: 26px;
+  font-weight: 700;
+  color: #222;
+}
+
+.history-screen,
+.send-screen {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.return-btn {
+  padding: 14px 28px;
+  font-size: 21px;
+  font-weight: 700;
+  background: #e8ecf0;
+  color: #222;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 28px;
+  transition: all 0.3s ease;
+}
+
+.return-btn:hover {
+  background: #d0d7de;
+  transform: translateX(-4px);
+}
+
+.history-screen h2,
+.send-screen h2 {
+  font-size: 34px;
+  color: #1a5490;
+  margin-bottom: 28px;
+  font-weight: 800;
+}
+
+.activity-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.activity-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 5px solid #1a5490;
+  transition: all 0.3s ease;
+}
+
+.activity-row:hover {
+  background: #e8ecf0;
+  transform: translateX(4px);
+}
+
+.activity-merchant {
+  font-size: 22px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+.activity-date {
+  font-size: 18px;
+  color: #888;
+}
+
+.activity-value {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.activity-value.credit {
+  color: #22863a;
+}
+
+.activity-value.debit {
+  color: #cb2431;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field-group label {
+  font-size: 22px;
+  font-weight: 700;
+  color: #222;
+}
+
+.field-group input {
+  padding: 20px 18px;
+  font-size: 21px;
+  border: 3px solid #d0d7de;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.field-group input:focus {
+  outline: none;
+  border-color: #1a5490;
+  box-shadow: 0 0 0 3px rgba(26, 84, 144, 0.1);
+}
+
+.send-btn {
+  padding: 22px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  background: #1a5490;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.send-btn:hover {
+  background: #144070;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26, 84, 144, 0.3);
+}
+
+.bottom-bar {
+  background: #fff;
+  padding: 24px;
+  text-align: center;
+  border-top: 2px solid #e8ecf0;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.bottom-bar p {
+  font-size: 20px;
+  color: #22863a;
+  font-weight: 700;
+}
+
+.help-screen {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contact-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e8ecf0 100%);
+  border: 3px solid #d0d7de;
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(26, 84, 144, 0.15);
+  border-color: #1a5490;
+}
+
+.contact-icon {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.contact-details {
+  flex: 1;
+}
+
+.contact-label {
+  font-size: 20px;
+  color: #555;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.contact-value {
+  font-size: 28px;
+  color: #1a5490;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.contact-note {
+  font-size: 18px;
+  color: #888;
+  font-weight: 500;
+}
+.confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.confirmation-dialog {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.confirmation-dialog h3 {
+  font-size: 28px;
+  color: #1a5490;
+  margin-bottom: 20px;
+  font-weight: 800;
+}
+
+.confirmation-dialog p {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 32px;
+  line-height: 1.4;
+}
+
+.confirmation-dialog strong {
+  color: #1a5490;
+  font-weight: 800;
+}
+
+.confirmation-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.cancel-btn {
+  padding: 18px 32px;
+  font-size: 20px;
+  font-weight: 700;
+  background: #e8ecf0;
+  color: #333;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background: #d0d7de;
+  transform: translateY(-2px);
+}
+
+.confirm-btn {
+  padding: 18px 32px;
+  font-size: 20px;
+  font-weight: 700;
+  background: #1a5490;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirm-btn:hover {
+  background: #144070;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26, 84, 144, 0.3);
+}
