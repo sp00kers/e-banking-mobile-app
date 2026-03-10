@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Login.css';
 
 function Login({ onLoginSuccess }) {
@@ -52,7 +52,7 @@ function Login({ onLoginSuccess }) {
         </form>
 
         <div className="support-section">
-          <p className="support-info">Questions? Call 1-888-555-BANK</p>
+          <p className="support-info">Questions? Call 1-888-555-2679</p>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Dashboard.css';
 
 function Dashboard({ userData, onSignOut }) {
@@ -64,7 +64,7 @@ function Dashboard({ userData, onSignOut }) {
                     <div className="activity-date">{item.date}</div>
                   </div>
                   <div className={`activity-value ${item.value > 0 ? 'credit' : 'debit'}`}>
-                    {item.value > 0 ? '+' : ''}${Math.abs(item.value).toFixed(2)}
+                    {item.value > 0 ? '+' : '-'}${Math.abs(item.value).toFixed(2)}
                   </div>
                 </div>
               ))}
