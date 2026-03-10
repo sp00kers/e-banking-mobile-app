@@ -12,3 +12,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #f0f4f8;
 }
+
+#root {
+  max-width: 600px;
+  margin: 0 auto;
+}
