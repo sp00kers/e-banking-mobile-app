@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
-import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import Login from './components/Login';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -10,8 +10,14 @@ function App() {
     setCurrentUser({ 
       username: name, 
       accountBalance: 8725.40,
-      accountNumber: '****5678'
+      accountNumber: '****5678',
+      password: 'mySecurePass123',
+      transactionLimit: 500
     });
+  };
+
+  const updateUserData = (updates) => {
+    setCurrentUser(prev => ({ ...prev, ...updates }));
   };
 
   const logoutHandler = () => {
@@ -23,7 +29,7 @@ function App() {
       {currentUser === null ? (
         <Login onLoginSuccess={loginHandler} />
       ) : (
-        <Dashboard userData={currentUser} onSignOut={logoutHandler} />
+        <Dashboard userData={currentUser} onSignOut={logoutHandler} onUpdateUser={updateUserData} />
       )}
     </div>
   );

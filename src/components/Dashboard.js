@@ -1,11 +1,64 @@
 import { useState } from 'react';
 import './Dashboard.css';
 
-function Dashboard({ userData, onSignOut }) {
+function Dashboard({ userData, onSignOut, onUpdateUser }) {
   const [currentScreen, setCurrentScreen] = useState('overview');
   const [recipientAccount, setRecipientAccount] = useState('');
   const [transferAmount, setTransferAmount] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
+  
+  // Personal Account states
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
+  const [newLimit, setNewLimit] = useState('');
+  const [limitError, setLimitError] = useState('');
+  const [limitSuccess, setLimitSuccess] = useState(false);
+
+  const censorPassword = (password) => {
+    return '*'.repeat(password.length);
+  };
+
+  const handlePasswordChange = (e) => {
+    e.preventDefault();
+    setPasswordError('');
+    setPasswordSuccess(false);
+    
+    if (!newPassword || !confirmPassword) {
+      setPasswordError('Please fill in all fields');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordError('Passwords do not match');
+      return;
+    }
+    if (newPassword.length < 6) {
+      setPasswordError('Password must be at least 6 characters');
+      return;
+    }
+    
+    onUpdateUser({ password: newPassword });
+    setNewPassword('');
+    setConfirmPassword('');
+    setPasswordSuccess(true);
+  };
+
+  const handleLimitChange = (e) => {
+    e.preventDefault();
+    setLimitError('');
+    setLimitSuccess(false);
+    
+    const limitValue = parseFloat(newLimit);
+    if (isNaN(limitValue) || limitValue < 10) {
+      setLimitError('Transaction limit must be at least $10');
+      return;
+    }
+    
+    onUpdateUser({ transactionLimit: limitValue });
+    setNewLimit('');
+    setLimitSuccess(true);
+  };
 
   const activityList = [
     { id: 'tx1', date: '2026-03-06', merchant: 'Supermarket', value: -67.80 },
@@ -41,6 +94,16 @@ function Dashboard({ userData, onSignOut }) {
               <button className="feature-btn" onClick={() => setCurrentScreen('history')}>
                 <span className="feature-emoji">📊</span>
                 <span className="feature-label">Account History</span>
+              </button>
+              <button className="feature-btn" onClick={() => {
+                setCurrentScreen('account');
+                setPasswordSuccess(false);
+                setPasswordError('');
+                setLimitSuccess(false);
+                setLimitError('');
+              }}>
+                <span className="feature-emoji">👤</span>
+                <span className="feature-label">Personal Account</span>
               </button>
               <button className="feature-btn" onClick={() => setCurrentScreen('help')}>
                 <span className="feature-emoji">☎️</span>
@@ -141,6 +204,79 @@ function Dashboard({ userData, onSignOut }) {
                   <div className="contact-value">support@trustbank.com</div>
                   <div className="contact-note">We reply within 24 hours</div>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {currentScreen === 'account' && (
+          <div className="account-screen">
+            <button onClick={() => setCurrentScreen('overview')} className="return-btn">
+              ← Return Home
+            </button>
+            <h2>Personal Account</h2>
+            
+            <div className="account-info-section">
+              <div className="account-info-card">
+                <div className="info-label">Username</div>
+                <div className="info-value">{userData.username}</div>
+              </div>
+              <div className="account-info-card">
+                <div className="info-label">Password</div>
+                <div className="info-value">{censorPassword(userData.password)}</div>
+              </div>
+              <div className="account-info-card">
+                <div className="info-label">Transaction Limit</div>
+                <div className="info-value">${userData.transactionLimit.toFixed(2)}</div>
+              </div>
+            </div>
+
+            <div className="account-settings-section">
+              <div className="settings-card">
+                <h3>Change Password</h3>
+                <form onSubmit={handlePasswordChange} className="settings-form">
+                  <div className="field-group">
+                    <label>New Password</label>
+                    <input 
+                      type="password" 
+                      placeholder="Enter new password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className="field-group">
+                    <label>Confirm Password</label>
+                    <input 
+                      type="password" 
+                      placeholder="Confirm new password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                  </div>
+                  {passwordError && <div className="error-message">{passwordError}</div>}
+                  {passwordSuccess && <div className="success-message">Password changed successfully!</div>}
+                  <button type="submit" className="settings-btn">Update Password</button>
+                </form>
+              </div>
+
+              <div className="settings-card">
+                <h3>Change Transaction Limit</h3>
+                <form onSubmit={handleLimitChange} className="settings-form">
+                  <div className="field-group">
+                    <label>New Limit (Minimum: $10)</label>
+                    <input 
+                      type="number" 
+                      placeholder="Enter new limit"
+                      step="0.01"
+                      min="10"
+                      value={newLimit}
+                      onChange={(e) => setNewLimit(e.target.value)}
+                    />
+                  </div>
+                  {limitError && <div className="error-message">{limitError}</div>}
+                  {limitSuccess && <div className="success-message">Transaction limit updated successfully!</div>}
+                  <button type="submit" className="settings-btn">Update Limit</button>
+                </form>
               </div>
             </div>
           </div>

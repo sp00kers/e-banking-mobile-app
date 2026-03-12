@@ -407,3 +407,112 @@
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(26, 84, 144, 0.3);
 }
+
+/* Personal Account Screen */
+.account-screen {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.account-screen h2 {
+  font-size: 34px;
+  color: #1a5490;
+  margin-bottom: 28px;
+  font-weight: 800;
+}
+
+.account-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.account-info-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e8ecf0 100%);
+  border: 3px solid #d0d7de;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-label {
+  font-size: 20px;
+  color: #555;
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 24px;
+  color: #1a5490;
+  font-weight: 800;
+  font-family: monospace;
+}
+
+.account-settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.settings-card {
+  background: #f8f9fa;
+  border: 3px solid #d0d7de;
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.settings-card h3 {
+  font-size: 24px;
+  color: #1a5490;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.settings-btn {
+  padding: 18px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  background: #1a5490;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.settings-btn:hover {
+  background: #144070;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26, 84, 144, 0.3);
+}
+
+.error-message {
+  background: #ffeef0;
+  border: 2px solid #cb2431;
+  color: #cb2431;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.success-message {
+  background: #e6ffed;
+  border: 2px solid #22863a;
+  color: #22863a;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
