@@ -1,0 +1,73 @@
+{
+  "app.bankName": "TrustBank",
+
+  "login.subtitle": "轻松银行业务",
+  "login.usernameLabel": "用户名",
+  "login.usernamePlaceholder": "请输入用户名",
+  "login.passwordLabel": "密码",
+  "login.passwordPlaceholder": "请输入密码",
+  "login.submitButton": "登录账户",
+  "login.supportText": "有问题？请拨打 1-888-555-2679",
+
+  "dashboard.greeting": "你好，",
+  "dashboard.logOut": "退出",
+
+  "overview.balanceTitle": "账户余额",
+  "overview.balanceNote": "可用余额",
+  "overview.sendMoney": "转账",
+  "overview.history": "交易记录",
+  "overview.personalAccount": "个人账户",
+  "overview.getHelp": "获取帮助",
+
+  "common.returnHome": "← 返回首页",
+
+  "history.title": "交易记录",
+
+  "send.title": "转账",
+  "send.recipientLabel": "收款账户",
+  "send.recipientPlaceholder": "账户号码",
+  "send.amountLabel": "转账金额",
+  "send.amountPlaceholder": "请输入金额",
+  "send.submitButton": "完成转账",
+
+  "help.title": "联系我们",
+  "help.phoneLabel": "电话号码",
+  "help.phoneValue": "1-888-555-2679",
+  "help.phoneNote": "24/7 全天候服务",
+  "help.emailLabel": "电子邮箱",
+  "help.emailValue": "support@trustbank.com",
+  "help.emailNote": "24小时内回复",
+
+  "account.title": "个人账户",
+  "account.usernameLabel": "用户名",
+  "account.passwordLabel": "密码",
+  "account.transactionLimitLabel": "交易限额",
+
+  "account.changePassword": "修改密码",
+  "account.newPasswordLabel": "新密码",
+  "account.newPasswordPlaceholder": "请输入新密码",
+  "account.confirmPasswordLabel": "确认密码",
+  "account.confirmPasswordPlaceholder": "请再次输入新密码",
+  "account.updatePasswordButton": "更新密码",
+
+  "account.changeLimit": "修改交易限额",
+  "account.newLimitLabel": "新限额（最低：$10）",
+  "account.newLimitPlaceholder": "请输入新限额",
+  "account.updateLimitButton": "更新限额",
+
+  "footer.encryption": "受银行级加密保护",
+
+  "confirm.title": "确认转账",
+  "confirm.message": "您确定要转账",
+  "confirm.to": "到",
+  "confirm.cancelButton": "取消",
+  "confirm.confirmButton": "确认转账",
+
+  "alert.transferSuccess": "转账成功！",
+  "error.fillAllFields": "请填写所有字段",
+  "error.passwordsMismatch": "两次密码不一致",
+  "error.passwordTooShort": "密码至少需要6个字符",
+  "error.limitTooLow": "交易限额至少为 $10",
+  "success.passwordChanged": "密码修改成功！",
+  "success.limitUpdated": "交易限额更新成功！"
+}

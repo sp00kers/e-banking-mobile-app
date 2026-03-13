@@ -1,0 +1,73 @@
+{
+  "app.bankName": "TrustBank",
+
+  "login.subtitle": "Banking Made Easy",
+  "login.usernameLabel": "Your Username",
+  "login.usernamePlaceholder": "Type your username",
+  "login.passwordLabel": "Your Password",
+  "login.passwordPlaceholder": "Type your password",
+  "login.submitButton": "Login to Your Account",
+  "login.supportText": "Questions? Call 1-888-555-2679",
+
+  "dashboard.greeting": "Hello, ",
+  "dashboard.logOut": "Log Out",
+
+  "overview.balanceTitle": "Account Balance",
+  "overview.balanceNote": "Ready to spend",
+  "overview.sendMoney": "Send Money",
+  "overview.history": "Account History",
+  "overview.personalAccount": "Personal Account",
+  "overview.getHelp": "Get Help",
+
+  "common.returnHome": "← Return Home",
+
+  "history.title": "Transaction History",
+
+  "send.title": "Send Money",
+  "send.recipientLabel": "Recipient Account",
+  "send.recipientPlaceholder": "Account number",
+  "send.amountLabel": "Transfer Amount",
+  "send.amountPlaceholder": "Enter amount",
+  "send.submitButton": "Complete Transfer",
+
+  "help.title": "Contact Us",
+  "help.phoneLabel": "Phone Number",
+  "help.phoneValue": "1-888-555-2679",
+  "help.phoneNote": "Available 24/7",
+  "help.emailLabel": "Email Address",
+  "help.emailValue": "support@trustbank.com",
+  "help.emailNote": "We reply within 24 hours",
+
+  "account.title": "Personal Account",
+  "account.usernameLabel": "Username",
+  "account.passwordLabel": "Password",
+  "account.transactionLimitLabel": "Transaction Limit",
+
+  "account.changePassword": "Change Password",
+  "account.newPasswordLabel": "New Password",
+  "account.newPasswordPlaceholder": "Enter new password",
+  "account.confirmPasswordLabel": "Confirm Password",
+  "account.confirmPasswordPlaceholder": "Confirm new password",
+  "account.updatePasswordButton": "Update Password",
+
+  "account.changeLimit": "Change Transaction Limit",
+  "account.newLimitLabel": "New Limit (Minimum: $10)",
+  "account.newLimitPlaceholder": "Enter new limit",
+  "account.updateLimitButton": "Update Limit",
+
+  "footer.encryption": "Protected by bank-level encryption",
+
+  "confirm.title": "Confirm Transfer",
+  "confirm.message": "Are you sure you want to transfer",
+  "confirm.to": "to",
+  "confirm.cancelButton": "Cancel",
+  "confirm.confirmButton": "Confirm Transfer",
+
+  "alert.transferSuccess": "Transfer completed successfully!",
+  "error.fillAllFields": "Please fill in all fields",
+  "error.passwordsMismatch": "Passwords do not match",
+  "error.passwordTooShort": "Password must be at least 6 characters",
+  "error.limitTooLow": "Transaction limit must be at least $10",
+  "success.passwordChanged": "Password changed successfully!",
+  "success.limitUpdated": "Transaction limit updated successfully!"
+}

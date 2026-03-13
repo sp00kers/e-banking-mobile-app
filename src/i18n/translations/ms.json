@@ -1,0 +1,73 @@
+{
+  "app.bankName": "TrustBank",
+
+  "login.subtitle": "Perbankan Mudah",
+  "login.usernameLabel": "Nama Pengguna Anda",
+  "login.usernamePlaceholder": "Taip nama pengguna anda",
+  "login.passwordLabel": "Kata Laluan Anda",
+  "login.passwordPlaceholder": "Taip kata laluan anda",
+  "login.submitButton": "Log Masuk Akaun Anda",
+  "login.supportText": "Soalan? Hubungi 1-888-555-2679",
+
+  "dashboard.greeting": "Helo, ",
+  "dashboard.logOut": "Log Keluar",
+
+  "overview.balanceTitle": "Baki Akaun",
+  "overview.balanceNote": "Sedia untuk dibelanjakan",
+  "overview.sendMoney": "Hantar Wang",
+  "overview.history": "Sejarah Akaun",
+  "overview.personalAccount": "Akaun Peribadi",
+  "overview.getHelp": "Dapatkan Bantuan",
+
+  "common.returnHome": "← Kembali",
+
+  "history.title": "Sejarah Transaksi",
+
+  "send.title": "Hantar Wang",
+  "send.recipientLabel": "Akaun Penerima",
+  "send.recipientPlaceholder": "Nombor akaun",
+  "send.amountLabel": "Jumlah Pemindahan",
+  "send.amountPlaceholder": "Masukkan jumlah",
+  "send.submitButton": "Selesai Pemindahan",
+
+  "help.title": "Hubungi Kami",
+  "help.phoneLabel": "Nombor Telefon",
+  "help.phoneValue": "1-888-555-2679",
+  "help.phoneNote": "Tersedia 24/7",
+  "help.emailLabel": "Alamat E-mel",
+  "help.emailValue": "support@trustbank.com",
+  "help.emailNote": "Kami membalas dalam 24 jam",
+
+  "account.title": "Akaun Peribadi",
+  "account.usernameLabel": "Nama Pengguna",
+  "account.passwordLabel": "Kata Laluan",
+  "account.transactionLimitLabel": "Had Transaksi",
+
+  "account.changePassword": "Tukar Kata Laluan",
+  "account.newPasswordLabel": "Kata Laluan Baru",
+  "account.newPasswordPlaceholder": "Masukkan kata laluan baru",
+  "account.confirmPasswordLabel": "Sahkan Kata Laluan",
+  "account.confirmPasswordPlaceholder": "Sahkan kata laluan baru",
+  "account.updatePasswordButton": "Kemas Kini Kata Laluan",
+
+  "account.changeLimit": "Tukar Had Transaksi",
+  "account.newLimitLabel": "Had Baru (Minimum: $10)",
+  "account.newLimitPlaceholder": "Masukkan had baru",
+  "account.updateLimitButton": "Kemas Kini Had",
+
+  "footer.encryption": "Dilindungi oleh penyulitan peringkat bank",
+
+  "confirm.title": "Sahkan Pemindahan",
+  "confirm.message": "Adakah anda pasti mahu memindahkan",
+  "confirm.to": "kepada",
+  "confirm.cancelButton": "Batal",
+  "confirm.confirmButton": "Sahkan Pemindahan",
+
+  "alert.transferSuccess": "Pemindahan berjaya!",
+  "error.fillAllFields": "Sila isi semua ruangan",
+  "error.passwordsMismatch": "Kata laluan tidak sepadan",
+  "error.passwordTooShort": "Kata laluan mesti sekurang-kurangnya 6 aksara",
+  "error.limitTooLow": "Had transaksi mesti sekurang-kurangnya $10",
+  "success.passwordChanged": "Kata laluan berjaya ditukar!",
+  "success.limitUpdated": "Had transaksi berjaya dikemas kini!"
+}

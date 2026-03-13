@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useTranslation } from '../i18n/LanguageContext';
+import LanguageSelector from './LanguageSelector';
 import './Login.css';
 
 function Login({ onLoginSuccess }) {
   const [userInput, setUserInput] = useState('');
   const [passInput, setPassInput] = useState('');
+  const { t } = useTranslation();
 
   const submitForm = (event) => {
     event.preventDefault();
@@ -15,44 +18,47 @@ function Login({ onLoginSuccess }) {
   return (
     <div className="login-wrapper">
       <div className="login-box">
+        <div className="login-language-selector">
+          <LanguageSelector />
+        </div>
         <div className="header-section">
           <div className="security-icon">🛡️</div>
-          <h1>TrustBank</h1>
-          <p className="subtitle">Banking Made Easy</p>
+          <h1>{t('app.bankName')}</h1>
+          <p className="subtitle">{t('login.subtitle')}</p>
         </div>
 
         <form onSubmit={submitForm} className="auth-form">
           <div className="input-group">
-            <label htmlFor="user">Your Username</label>
+            <label htmlFor="user">{t('login.usernameLabel')}</label>
             <input
               id="user"
               type="text"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
-              placeholder="Type your username"
+              placeholder={t('login.usernamePlaceholder')}
               autoComplete="username"
             />
           </div>
 
           <div className="input-group">
-            <label htmlFor="pass">Your Password</label>
+            <label htmlFor="pass">{t('login.passwordLabel')}</label>
             <input
               id="pass"
               type="password"
               value={passInput}
               onChange={(e) => setPassInput(e.target.value)}
-              placeholder="Type your password"
+              placeholder={t('login.passwordPlaceholder')}
               autoComplete="current-password"
             />
           </div>
 
           <button type="submit" className="signin-btn">
-            Login to Your Account
+            {t('login.submitButton')}
           </button>
         </form>
 
         <div className="support-section">
-          <p className="support-info">Questions? Call 1-888-555-2679</p>
+          <p className="support-info">{t('login.supportText')}</p>
         </div>
       </div>
     </div>

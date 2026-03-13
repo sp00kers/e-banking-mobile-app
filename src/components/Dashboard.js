@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { useTranslation } from '../i18n/LanguageContext';
 import './Dashboard.css';
+import LanguageSelector from './LanguageSelector';
 
 function Dashboard({ userData, onSignOut, onUpdateUser }) {
   const [currentScreen, setCurrentScreen] = useState('overview');
   const [recipientAccount, setRecipientAccount] = useState('');
   const [transferAmount, setTransferAmount] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
-  
+
   // Personal Account states
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -16,6 +18,8 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
   const [limitError, setLimitError] = useState('');
   const [limitSuccess, setLimitSuccess] = useState(false);
 
+  const { t } = useTranslation();
+
   const censorPassword = (password) => {
     return '*'.repeat(password.length);
   };
@@ -24,20 +28,20 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
     e.preventDefault();
     setPasswordError('');
     setPasswordSuccess(false);
-    
+
     if (!newPassword || !confirmPassword) {
-      setPasswordError('Please fill in all fields');
+      setPasswordError('error.fillAllFields');
       return;
     }
     if (newPassword !== confirmPassword) {
-      setPasswordError('Passwords do not match');
+      setPasswordError('error.passwordsMismatch');
       return;
     }
     if (newPassword.length < 6) {
-      setPasswordError('Password must be at least 6 characters');
+      setPasswordError('error.passwordTooShort');
       return;
     }
-    
+
     onUpdateUser({ password: newPassword });
     setNewPassword('');
     setConfirmPassword('');
@@ -48,13 +52,13 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
     e.preventDefault();
     setLimitError('');
     setLimitSuccess(false);
-    
+
     const limitValue = parseFloat(newLimit);
     if (isNaN(limitValue) || limitValue < 10) {
-      setLimitError('Transaction limit must be at least $10');
+      setLimitError('error.limitTooLow');
       return;
     }
-    
+
     onUpdateUser({ transactionLimit: limitValue });
     setNewLimit('');
     setLimitSuccess(true);
@@ -70,10 +74,13 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
   return (
     <div className="main-dashboard">
       <header className="top-bar">
-        <h1>TrustBank</h1>
+        <div className="brand-section">
+          <h1>{t('app.bankName')}</h1>
+          <LanguageSelector />
+        </div>
         <div className="user-section">
-          <span className="greeting">Hello, {userData.username}</span>
-          <button onClick={onSignOut} className="exit-btn">Log Out</button>
+          <span className="greeting">{t('dashboard.greeting')}{userData.username}</span>
+          <button onClick={onSignOut} className="exit-btn">{t('dashboard.logOut')}</button>
         </div>
       </header>
 
@@ -81,19 +88,19 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
         {currentScreen === 'overview' && (
           <>
             <div className="account-summary">
-              <div className="summary-title">Account Balance</div>
+              <div className="summary-title">{t('overview.balanceTitle')}</div>
               <div className="summary-value">${userData.accountBalance.toFixed(2)}</div>
-              <div className="summary-note">Ready to spend</div>
+              <div className="summary-note">{t('overview.balanceNote')}</div>
             </div>
 
             <div className="action-grid">
               <button className="feature-btn" onClick={() => setCurrentScreen('send')}>
                 <span className="feature-emoji">💰</span>
-                <span className="feature-label">Send Money</span>
+                <span className="feature-label">{t('overview.sendMoney')}</span>
               </button>
               <button className="feature-btn" onClick={() => setCurrentScreen('history')}>
                 <span className="feature-emoji">📊</span>
-                <span className="feature-label">Account History</span>
+                <span className="feature-label">{t('overview.history')}</span>
               </button>
               <button className="feature-btn" onClick={() => {
                 setCurrentScreen('account');
@@ -103,11 +110,11 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                 setLimitError('');
               }}>
                 <span className="feature-emoji">👤</span>
-                <span className="feature-label">Personal Account</span>
+                <span className="feature-label">{t('overview.personalAccount')}</span>
               </button>
               <button className="feature-btn" onClick={() => setCurrentScreen('help')}>
                 <span className="feature-emoji">☎️</span>
-                <span className="feature-label">Get Help</span>
+                <span className="feature-label">{t('overview.getHelp')}</span>
               </button>
             </div>
           </>
@@ -116,9 +123,9 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
         {currentScreen === 'history' && (
           <div className="history-screen">
             <button onClick={() => setCurrentScreen('overview')} className="return-btn">
-              ← Return Home
+              {t('common.returnHome')}
             </button>
-            <h2>Transaction History</h2>
+            <h2>{t('history.title')}</h2>
             <div className="activity-container">
               {activityList.map(item => (
                 <div key={item.id} className="activity-row">
@@ -138,9 +145,9 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
         {currentScreen === 'send' && (
           <div className="send-screen">
             <button onClick={() => setCurrentScreen('overview')} className="return-btn">
-              ← Return Home
+              {t('common.returnHome')}
             </button>
-            <h2>Send Money</h2>
+            <h2>{t('send.title')}</h2>
             <form className="payment-form" onSubmit={(e) => {
               e.preventDefault();
               if (recipientAccount && transferAmount) {
@@ -148,10 +155,10 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
               }
             }}>
               <div className="field-group">
-                <label>Recipient Account</label>
-                <input 
-                  type="number" 
-                  placeholder="Account number" 
+                <label>{t('send.recipientLabel')}</label>
+                <input
+                  type="number"
+                  placeholder={t('send.recipientPlaceholder')}
                   value={recipientAccount}
                   onChange={(e) => setRecipientAccount(e.target.value)}
                   onKeyPress={(e) => {
@@ -162,10 +169,10 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                 />
               </div>
               <div className="field-group">
-                <label>Transfer Amount</label>
-                <input 
-                  type="number" 
-                  placeholder="Enter amount" 
+                <label>{t('send.amountLabel')}</label>
+                <input
+                  type="number"
+                  placeholder={t('send.amountPlaceholder')}
                   step="0.01"
                   min="0"
                   value={transferAmount}
@@ -177,7 +184,7 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                   }}
                 />
               </div>
-              <button type="submit" className="send-btn">Complete Transfer</button>
+              <button type="submit" className="send-btn">{t('send.submitButton')}</button>
             </form>
           </div>
         )}
@@ -185,24 +192,24 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
         {currentScreen === 'help' && (
           <div className="help-screen">
             <button onClick={() => setCurrentScreen('overview')} className="return-btn">
-              ← Return Home
+              {t('common.returnHome')}
             </button>
-            <h2>Contact Us</h2>
+            <h2>{t('help.title')}</h2>
             <div className="contact-info">
               <div className="contact-card">
                 <div className="contact-icon">📞</div>
                 <div className="contact-details">
-                  <div className="contact-label">Phone Number</div>
-                  <div className="contact-value">1-888-555-2679</div>
-                  <div className="contact-note">Available 24/7</div>
+                  <div className="contact-label">{t('help.phoneLabel')}</div>
+                  <div className="contact-value">{t('help.phoneValue')}</div>
+                  <div className="contact-note">{t('help.phoneNote')}</div>
                 </div>
               </div>
               <div className="contact-card">
                 <div className="contact-icon">✉️</div>
                 <div className="contact-details">
-                  <div className="contact-label">Email Address</div>
-                  <div className="contact-value">support@trustbank.com</div>
-                  <div className="contact-note">We reply within 24 hours</div>
+                  <div className="contact-label">{t('help.emailLabel')}</div>
+                  <div className="contact-value">{t('help.emailValue')}</div>
+                  <div className="contact-note">{t('help.emailNote')}</div>
                 </div>
               </div>
             </div>
@@ -212,70 +219,70 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
         {currentScreen === 'account' && (
           <div className="account-screen">
             <button onClick={() => setCurrentScreen('overview')} className="return-btn">
-              ← Return Home
+              {t('common.returnHome')}
             </button>
-            <h2>Personal Account</h2>
-            
+            <h2>{t('account.title')}</h2>
+
             <div className="account-info-section">
               <div className="account-info-card">
-                <div className="info-label">Username</div>
+                <div className="info-label">{t('account.usernameLabel')}</div>
                 <div className="info-value">{userData.username}</div>
               </div>
               <div className="account-info-card">
-                <div className="info-label">Password</div>
+                <div className="info-label">{t('account.passwordLabel')}</div>
                 <div className="info-value">{censorPassword(userData.password)}</div>
               </div>
               <div className="account-info-card">
-                <div className="info-label">Transaction Limit</div>
+                <div className="info-label">{t('account.transactionLimitLabel')}</div>
                 <div className="info-value">${userData.transactionLimit.toFixed(2)}</div>
               </div>
             </div>
 
             <div className="account-settings-section">
               <div className="settings-card">
-                <h3>Change Password</h3>
+                <h3>{t('account.changePassword')}</h3>
                 <form onSubmit={handlePasswordChange} className="settings-form">
                   <div className="field-group">
-                    <label>New Password</label>
-                    <input 
-                      type="password" 
-                      placeholder="Enter new password"
+                    <label>{t('account.newPasswordLabel')}</label>
+                    <input
+                      type="password"
+                      placeholder={t('account.newPasswordPlaceholder')}
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                     />
                   </div>
                   <div className="field-group">
-                    <label>Confirm Password</label>
-                    <input 
-                      type="password" 
-                      placeholder="Confirm new password"
+                    <label>{t('account.confirmPasswordLabel')}</label>
+                    <input
+                      type="password"
+                      placeholder={t('account.confirmPasswordPlaceholder')}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                   </div>
-                  {passwordError && <div className="error-message">{passwordError}</div>}
-                  {passwordSuccess && <div className="success-message">Password changed successfully!</div>}
-                  <button type="submit" className="settings-btn">Update Password</button>
+                  {passwordError && <div className="error-message">{t(passwordError)}</div>}
+                  {passwordSuccess && <div className="success-message">{t('success.passwordChanged')}</div>}
+                  <button type="submit" className="settings-btn">{t('account.updatePasswordButton')}</button>
                 </form>
               </div>
 
               <div className="settings-card">
-                <h3>Change Transaction Limit</h3>
+                <h3>{t('account.changeLimit')}</h3>
                 <form onSubmit={handleLimitChange} className="settings-form">
                   <div className="field-group">
-                    <label>New Limit (Minimum: $10)</label>
-                    <input 
-                      type="number" 
-                      placeholder="Enter new limit"
+                    <label>{t('account.newLimitLabel')}</label>
+                    <input
+                      type="number"
+                      placeholder={t('account.newLimitPlaceholder')}
                       step="0.01"
                       min="10"
                       value={newLimit}
                       onChange={(e) => setNewLimit(e.target.value)}
                     />
                   </div>
-                  {limitError && <div className="error-message">{limitError}</div>}
-                  {limitSuccess && <div className="success-message">Transaction limit updated successfully!</div>}
-                  <button type="submit" className="settings-btn">Update Limit</button>
+                  {limitError && <div className="error-message">{t(limitError)}</div>}
+                  {limitSuccess && <div className="success-message">{t('success.limitUpdated')}</div>}
+                  <button type="submit" className="settings-btn">{t('account.updateLimitButton')}</button>
                 </form>
               </div>
             </div>
@@ -284,32 +291,32 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
       </main>
 
       <footer className="bottom-bar">
-        <p>🔐 Protected by bank-level encryption</p>
+        <p>🔐 {t('footer.encryption')}</p>
       </footer>
 
       {showConfirmation && (
         <div className="confirmation-overlay">
           <div className="confirmation-dialog">
-            <h3>Confirm Transfer</h3>
-            <p>Are you sure you want to transfer <strong>${transferAmount}</strong> to <strong>{recipientAccount}</strong>?</p>
+            <h3>{t('confirm.title')}</h3>
+            <p>{t('confirm.message')} <strong>${transferAmount}</strong> {t('confirm.to')} <strong>{recipientAccount}</strong>?</p>
             <div className="confirmation-buttons">
-              <button 
-                className="cancel-btn" 
+              <button
+                className="cancel-btn"
                 onClick={() => setShowConfirmation(false)}
               >
-                Cancel
+                {t('confirm.cancelButton')}
               </button>
-              <button 
+              <button
                 className="confirm-btn"
                 onClick={() => {
                   setShowConfirmation(false);
                   setRecipientAccount('');
                   setTransferAmount('');
-                  alert('Transfer completed successfully!');
+                  alert(t('alert.transferSuccess'));
                   setCurrentScreen('overview');
                 }}
               >
-                Confirm Transfer
+                {t('confirm.confirmButton')}
               </button>
             </div>
           </div>

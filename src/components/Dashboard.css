@@ -20,6 +20,12 @@
   font-weight: 800;
 }
 
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .user-section {
   display: flex;
   align-items: center;
