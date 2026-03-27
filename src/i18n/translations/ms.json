@@ -24,8 +24,8 @@
   "history.title": "Sejarah Transaksi",
 
   "send.title": "Hantar Wang",
-  "send.recipientLabel": "Akaun Penerima",
-  "send.recipientPlaceholder": "Nombor akaun",
+  "send.recipientLabel": "Akaun / Nama Penerima",
+  "send.recipientPlaceholder": "Nombor akaun atau nama",
   "send.amountLabel": "Jumlah Pemindahan",
   "send.amountPlaceholder": "Masukkan jumlah",
   "send.submitButton": "Selesai Pemindahan",

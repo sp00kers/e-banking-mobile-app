@@ -157,15 +157,10 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
               <div className="field-group">
                 <label>{t('send.recipientLabel')}</label>
                 <input
-                  type="number"
+                  type="text"
                   placeholder={t('send.recipientPlaceholder')}
                   value={recipientAccount}
                   onChange={(e) => setRecipientAccount(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (!/[0-9]/.test(e.key)) {
-                      e.preventDefault();
-                    }
-                  }}
                 />
               </div>
               <div className="field-group">

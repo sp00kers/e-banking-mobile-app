@@ -24,8 +24,8 @@
   "history.title": "Transaction History",
 
   "send.title": "Send Money",
-  "send.recipientLabel": "Recipient Account",
-  "send.recipientPlaceholder": "Account number",
+  "send.recipientLabel": "Recipient Account / Name",
+  "send.recipientPlaceholder": "Account number or name",
   "send.amountLabel": "Transfer Amount",
   "send.amountPlaceholder": "Enter amount",
   "send.submitButton": "Complete Transfer",

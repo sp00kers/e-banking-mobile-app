@@ -24,8 +24,8 @@
   "history.title": "交易记录",
 
   "send.title": "转账",
-  "send.recipientLabel": "收款账户",
-  "send.recipientPlaceholder": "账户号码",
+  "send.recipientLabel": "收款账户 / 姓名",
+  "send.recipientPlaceholder": "账户号码或姓名",
   "send.amountLabel": "转账金额",
   "send.amountPlaceholder": "请输入金额",
   "send.submitButton": "完成转账",
