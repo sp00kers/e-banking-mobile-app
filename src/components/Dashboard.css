@@ -94,17 +94,17 @@
 
 .action-grid {
   display: grid;
-  gap: 24px;
+  gap: 20px;
 }
 
 .feature-btn {
   background: #fff;
   border: 3px solid #d0d7de;
   border-radius: 16px;
-  padding: 32px;
+  padding: 27px;
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
@@ -117,11 +117,11 @@
 }
 
 .feature-emoji {
-  font-size: 44px;
+  font-size: 37px;
 }
 
 .feature-label {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 700;
   color: #222;
 }
