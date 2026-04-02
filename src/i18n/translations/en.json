@@ -1,5 +1,5 @@
 {
-  "app.bankName": "TrustBank",
+  "app.bankName": "EasyBank",
 
   "login.subtitle": "Banking Made Easy",
   "login.usernameLabel": "Your Username",
@@ -18,6 +18,7 @@
   "overview.history": "Account History",
   "overview.personalAccount": "Personal Account",
   "overview.getHelp": "Get Help",
+  "overview.askAI": "Ask AI Assistant",
 
   "common.returnHome": "← Return Home",
 
@@ -35,7 +36,7 @@
   "help.phoneValue": "1-888-555-2679",
   "help.phoneNote": "Available 24/7",
   "help.emailLabel": "Email Address",
-  "help.emailValue": "support@trustbank.com",
+  "help.emailValue": "support@easybank.com",
   "help.emailNote": "We reply within 24 hours",
 
   "account.title": "Personal Account",
@@ -51,7 +52,7 @@
   "account.updatePasswordButton": "Update Password",
 
   "account.changeLimit": "Change Transaction Limit",
-  "account.newLimitLabel": "New Limit (Minimum: $10)",
+  "account.newLimitLabel": "New Limit (Minimum: RM 10)",
   "account.newLimitPlaceholder": "Enter new limit",
   "account.updateLimitButton": "Update Limit",
 
@@ -67,7 +68,23 @@
   "error.fillAllFields": "Please fill in all fields",
   "error.passwordsMismatch": "Passwords do not match",
   "error.passwordTooShort": "Password must be at least 6 characters",
-  "error.limitTooLow": "Transaction limit must be at least $10",
+  "error.limitTooLow": "Transaction limit must be at least RM 10",
   "success.passwordChanged": "Password changed successfully!",
-  "success.limitUpdated": "Transaction limit updated successfully!"
+  "success.limitUpdated": "Transaction limit updated successfully!",
+
+  "ask.title": "AI Assistant",
+  "ask.greeting": "Hello! I'm your EasyBank AI assistant. How can I help you today?",
+  "ask.transferDetails": "I found the following transfer request:",
+  "ask.recipientName": "Recipient",
+  "ask.accountNumber": "Account No.",
+  "ask.transferAmount": "Amount",
+  "ask.askPassword": "Please type your password to confirm and complete this transfer.",
+  "ask.processing": "Verifying your password and processing the transfer...",
+  "ask.transferSuccess": "Transfer completed successfully! The money has been sent.",
+  "ask.anythingElse": "Is there anything else I can help you with?",
+  "ask.searchingContacts": "Searching your contacts for \"Ahmad\"...",
+  "ask.multipleContacts": "I found multiple contacts named Ahmad. Which one would you like to transfer to?",
+  "ask.inputPlaceholder": "Type a message...",
+  "ask.passwordPlaceholder": "Enter your password...",
+  "ask.voicePlaceholderText": "Transfer 250 ringgit to Ahmad"
 }

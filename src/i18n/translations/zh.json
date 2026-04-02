@@ -1,5 +1,5 @@
 {
-  "app.bankName": "TrustBank",
+  "app.bankName": "EasyBank",
 
   "login.subtitle": "轻松银行业务",
   "login.usernameLabel": "用户名",
@@ -18,6 +18,7 @@
   "overview.history": "交易记录",
   "overview.personalAccount": "个人账户",
   "overview.getHelp": "获取帮助",
+  "overview.askAI": "AI 智能助手",
 
   "common.returnHome": "← 返回首页",
 
@@ -35,7 +36,7 @@
   "help.phoneValue": "1-888-555-2679",
   "help.phoneNote": "24/7 全天候服务",
   "help.emailLabel": "电子邮箱",
-  "help.emailValue": "support@trustbank.com",
+  "help.emailValue": "support@easybank.com",
   "help.emailNote": "24小时内回复",
 
   "account.title": "个人账户",
@@ -51,7 +52,7 @@
   "account.updatePasswordButton": "更新密码",
 
   "account.changeLimit": "修改交易限额",
-  "account.newLimitLabel": "新限额（最低：$10）",
+  "account.newLimitLabel": "新限额（最低：RM 10）",
   "account.newLimitPlaceholder": "请输入新限额",
   "account.updateLimitButton": "更新限额",
 
@@ -67,7 +68,23 @@
   "error.fillAllFields": "请填写所有字段",
   "error.passwordsMismatch": "两次密码不一致",
   "error.passwordTooShort": "密码至少需要6个字符",
-  "error.limitTooLow": "交易限额至少为 $10",
+  "error.limitTooLow": "交易限额至少为 RM 10",
   "success.passwordChanged": "密码修改成功！",
-  "success.limitUpdated": "交易限额更新成功！"
+  "success.limitUpdated": "交易限额更新成功！",
+
+  "ask.title": "AI 智能助手",
+  "ask.greeting": "您好！我是EasyBank的AI助手。请问有什么可以帮您的？",
+  "ask.transferDetails": "我找到了以下转账请求：",
+  "ask.recipientName": "收款人",
+  "ask.accountNumber": "账户号码",
+  "ask.transferAmount": "金额",
+  "ask.askPassword": "请输入您的密码以确认并完成此转账。",
+  "ask.processing": "正在验证您的密码并处理转账...",
+  "ask.transferSuccess": "转账成功！款项已发送。",
+  "ask.anythingElse": "还有什么我可以帮您的吗？",
+  "ask.searchingContacts": "正在搜索您的联系人 \"Ahmad\"...",
+  "ask.multipleContacts": "我找到了多个名为 Ahmad 的联系人。您想转账给哪一位？",
+  "ask.inputPlaceholder": "输入消息...",
+  "ask.passwordPlaceholder": "请输入密码...",
+  "ask.voicePlaceholderText": "转账250令吉给Ahmad"
 }

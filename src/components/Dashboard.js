@@ -9,6 +9,12 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
   const [transferAmount, setTransferAmount] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  // Ask AI Chat states
+  const [chatMessages, setChatMessages] = useState([]);
+  const [chatInput, setChatInput] = useState('');
+  const [chatStep, setChatStep] = useState(0);
+  const [isRecording, setIsRecording] = useState(false);
+
   // Personal Account states
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,6 +28,84 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
 
   const censorPassword = (password) => {
     return '*'.repeat(password.length);
+  };
+
+  const contacts = [
+    { id: 1, name: 'Ahmad bin Ibrahim', account: '7721-0034-8891', bank: 'EasyBank' },
+    { id: 2, name: 'Ahmad Rizal', account: '5510-2287-4430', bank: 'MayBank' },
+    { id: 3, name: 'Ahmad Faizal bin Osman', account: '6639-1102-7765', bank: 'CIMB' },
+  ];
+
+  const handleContactSelect = (contact) => {
+    const newMessages = [
+      ...chatMessages,
+      { sender: 'user', text: contact.name },
+      {
+        sender: 'ai',
+        text: t('ask.transferDetails'),
+        isTransfer: true,
+        details: {
+          name: contact.name,
+          account: contact.account,
+          amount: 'RM 250.00'
+        }
+      },
+      { sender: 'ai', text: t('ask.askPassword') }
+    ];
+    setChatMessages(newMessages);
+    setChatStep(2);
+  };
+
+  const handleChatSend = () => {
+    if (!chatInput.trim()) return;
+    const userMsg = { sender: 'user', text: chatInput };
+    const newMessages = [...chatMessages, userMsg];
+    setChatInput('');
+
+    if (chatStep === 0) {
+      // After greeting, AI searches contacts and finds multiple Ahmads
+      newMessages.push({ sender: 'ai', text: t('ask.searchingContacts') });
+      setChatStep(1);
+      setChatMessages(newMessages);
+      // Simulate search delay
+      setTimeout(() => {
+        setChatMessages(prev => [
+          ...prev,
+          {
+            sender: 'ai',
+            text: t('ask.multipleContacts'),
+            isContactList: true,
+            contacts: contacts
+          }
+        ]);
+      }, 1000);
+      return;
+    } else if (chatStep === 2) {
+      // User entered password, AI processes transfer
+      newMessages.push({ sender: 'ai', text: t('ask.processing') });
+      setChatStep(3);
+      setChatMessages(newMessages);
+      // Simulate delay then show success and allow more transactions
+      setTimeout(() => {
+        setChatMessages(prev => [
+          ...prev,
+          { sender: 'ai', text: t('ask.transferSuccess') },
+          { sender: 'ai', text: t('ask.anythingElse') }
+        ]);
+        setChatStep(0);
+      }, 1500);
+      return;
+    }
+
+    setChatMessages(newMessages);
+  };
+
+  const handleVoiceRecord = () => {
+    setIsRecording(!isRecording);
+    if (isRecording) {
+      // Simulate voice input converting to text
+      setChatInput(t('ask.voicePlaceholderText'));
+    }
   };
 
   const handlePasswordChange = (e) => {
@@ -89,7 +173,7 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
           <>
             <div className="account-summary">
               <div className="summary-title">{t('overview.balanceTitle')}</div>
-              <div className="summary-value">${userData.accountBalance.toFixed(2)}</div>
+              <div className="summary-value">RM {userData.accountBalance.toFixed(2)}</div>
               <div className="summary-note">{t('overview.balanceNote')}</div>
             </div>
 
@@ -111,6 +195,15 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
               }}>
                 <span className="feature-emoji">👤</span>
                 <span className="feature-label">{t('overview.personalAccount')}</span>
+              </button>
+              <button className="feature-btn" onClick={() => {
+                setCurrentScreen('ask');
+                setChatMessages([{ sender: 'ai', text: t('ask.greeting') }]);
+                setChatStep(0);
+                setChatInput('');
+              }}>
+                <span className="feature-emoji">🤖</span>
+                <span className="feature-label">{t('overview.askAI')}</span>
               </button>
               <button className="feature-btn" onClick={() => setCurrentScreen('help')}>
                 <span className="feature-emoji">☎️</span>
@@ -134,7 +227,7 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                     <div className="activity-date">{item.date}</div>
                   </div>
                   <div className={`activity-value ${item.value > 0 ? 'credit' : 'debit'}`}>
-                    {item.value > 0 ? '+' : '-'}${Math.abs(item.value).toFixed(2)}
+                    {item.value > 0 ? '+' : '-'}RM {Math.abs(item.value).toFixed(2)}
                   </div>
                 </div>
               ))}
@@ -211,6 +304,83 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
           </div>
         )}
 
+        {currentScreen === 'ask' && (
+          <div className="ask-screen">
+            <button onClick={() => setCurrentScreen('overview')} className="return-btn">
+              {t('common.returnHome')}
+            </button>
+            <h2>{t('ask.title')}</h2>
+
+            <div className="chat-container">
+              <div className="chat-messages">
+                {chatMessages.map((msg, idx) => (
+                  <div key={idx} className={`chat-bubble ${msg.sender}`}>
+                    {msg.sender === 'ai' && <div className="chat-avatar">🤖</div>}
+                    <div className="chat-content">
+                      {msg.isContactList ? (
+                        <div className="contact-select-list">
+                          <div className="contact-select-header">{msg.text}</div>
+                          {msg.contacts.map(contact => (
+                            <button
+                              key={contact.id}
+                              className="contact-select-btn"
+                              onClick={() => handleContactSelect(contact)}
+                            >
+                              <div className="contact-select-name">{contact.name}</div>
+                              <div className="contact-select-info">{contact.account} · {contact.bank}</div>
+                            </button>
+                          ))}
+                        </div>
+                      ) : msg.isTransfer ? (
+                        <div className="transfer-card">
+                          <div className="transfer-header">{msg.text}</div>
+                          <div className="transfer-detail">
+                            <span className="transfer-label">{t('ask.recipientName')}</span>
+                            <span className="transfer-value">{msg.details.name}</span>
+                          </div>
+                          <div className="transfer-detail">
+                            <span className="transfer-label">{t('ask.accountNumber')}</span>
+                            <span className="transfer-value">{msg.details.account}</span>
+                          </div>
+                          <div className="transfer-detail">
+                            <span className="transfer-label">{t('ask.transferAmount')}</span>
+                            <span className="transfer-value amount">{msg.details.amount}</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <span>{msg.text}</span>
+                      )}
+                    </div>
+                    {msg.sender === 'user' && <div className="chat-avatar user-avatar">👤</div>}
+                  </div>
+                ))}
+              </div>
+
+              {chatStep !== 1 && (
+                <div className="chat-input-area">
+                  <input
+                    type={chatStep === 2 ? 'password' : 'text'}
+                    className="chat-input"
+                    placeholder={chatStep === 2 ? t('ask.passwordPlaceholder') : t('ask.inputPlaceholder')}
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleChatSend()}
+                  />
+                  <button
+                    className={`voice-btn ${isRecording ? 'recording' : ''}`}
+                    onClick={handleVoiceRecord}
+                  >
+                    {isRecording ? '⏹️' : '🎤'}
+                  </button>
+                  <button className="chat-send-btn" onClick={handleChatSend}>
+                    ➤
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {currentScreen === 'account' && (
           <div className="account-screen">
             <button onClick={() => setCurrentScreen('overview')} className="return-btn">
@@ -229,7 +399,7 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
               </div>
               <div className="account-info-card">
                 <div className="info-label">{t('account.transactionLimitLabel')}</div>
-                <div className="info-value">${userData.transactionLimit.toFixed(2)}</div>
+                <div className="info-value">RM {userData.transactionLimit.toFixed(2)}</div>
               </div>
             </div>
 
@@ -293,7 +463,7 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
         <div className="confirmation-overlay">
           <div className="confirmation-dialog">
             <h3>{t('confirm.title')}</h3>
-            <p>{t('confirm.message')} <strong>${transferAmount}</strong> {t('confirm.to')} <strong>{recipientAccount}</strong>?</p>
+            <p>{t('confirm.message')} <strong>RM {transferAmount}</strong> {t('confirm.to')} <strong>{recipientAccount}</strong>?</p>
             <div className="confirmation-buttons">
               <button
                 className="cancel-btn"

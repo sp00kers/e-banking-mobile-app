@@ -522,3 +522,265 @@
   font-size: 18px;
   font-weight: 600;
 }
+
+/* Ask AI Chat Screen */
+.ask-screen {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 160px);
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.ask-screen h2 {
+  font-size: 34px;
+  color: #1a5490;
+  margin-bottom: 20px;
+  font-weight: 800;
+}
+
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+  position: relative;
+}
+
+.chat-bubble {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 85%;
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-bubble.ai {
+  align-self: flex-start;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  flex-direction: row;
+}
+
+.chat-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #e8ecf0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.chat-avatar.user-avatar {
+  background: #1a5490;
+}
+
+.chat-content {
+  padding: 16px 20px;
+  border-radius: 18px;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.chat-bubble.ai .chat-content {
+  background: #f0f4f8;
+  color: #222;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-bubble.user .chat-content {
+  background: #1a5490;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+/* Contact selection list inside chat */
+.contact-select-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-select-header {
+  font-size: 18px;
+  color: #555;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.contact-select-btn {
+  background: #fff;
+  border: 2px solid #d0d7de;
+  border-radius: 12px;
+  padding: 14px 18px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-select-btn:hover {
+  border-color: #1a5490;
+  background: #f0f7ff;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(26, 84, 144, 0.15);
+}
+
+.contact-select-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.contact-select-info {
+  font-size: 14px;
+  color: #888;
+  font-family: monospace;
+}
+
+/* Transfer card inside chat */
+.transfer-card {
+  background: #fff;
+  border: 2px solid #d0d7de;
+  border-radius: 14px;
+  padding: 20px;
+  min-width: 260px;
+}
+
+.transfer-header {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.transfer-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e8ecf0;
+}
+
+.transfer-detail:last-child {
+  border-bottom: none;
+}
+
+.transfer-label {
+  font-size: 16px;
+  color: #888;
+  font-weight: 500;
+}
+
+.transfer-value {
+  font-size: 18px;
+  color: #222;
+  font-weight: 700;
+  font-family: monospace;
+}
+
+.transfer-value.amount {
+  color: #1a5490;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+/* Chat input area */
+.chat-input-area {
+  display: flex;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 2px solid #e8ecf0;
+  margin-top: 16px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 18px 20px;
+  font-size: 20px;
+  border: 3px solid #d0d7de;
+  border-radius: 28px;
+  transition: all 0.3s ease;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: #1a5490;
+  box-shadow: 0 0 0 3px rgba(26, 84, 144, 0.1);
+}
+
+.voice-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid #d0d7de;
+  background: #fff;
+  font-size: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.voice-btn:hover {
+  border-color: #1a5490;
+  transform: scale(1.05);
+}
+
+.voice-btn.recording {
+  border-color: #cb2431;
+  background: #ffeef0;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(203, 36, 49, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(203, 36, 49, 0); }
+}
+
+.chat-send-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #1a5490;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.chat-send-btn:hover {
+  background: #144070;
+  transform: scale(1.05);
+}

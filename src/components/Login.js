@@ -22,7 +22,7 @@ function Login({ onLoginSuccess }) {
           <LanguageSelector />
         </div>
         <div className="header-section">
-          <div className="security-icon">🛡️</div>
+          <div className="security-icon">🏦</div>
           <h1>{t('app.bankName')}</h1>
           <p className="subtitle">{t('login.subtitle')}</p>
         </div>

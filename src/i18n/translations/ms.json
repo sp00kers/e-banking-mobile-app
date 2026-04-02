@@ -1,5 +1,5 @@
 {
-  "app.bankName": "TrustBank",
+  "app.bankName": "EasyBank",
 
   "login.subtitle": "Perbankan Mudah",
   "login.usernameLabel": "Nama Pengguna Anda",
@@ -18,6 +18,7 @@
   "overview.history": "Sejarah Akaun",
   "overview.personalAccount": "Akaun Peribadi",
   "overview.getHelp": "Dapatkan Bantuan",
+  "overview.askAI": "Tanya Pembantu AI",
 
   "common.returnHome": "← Kembali",
 
@@ -35,7 +36,7 @@
   "help.phoneValue": "1-888-555-2679",
   "help.phoneNote": "Tersedia 24/7",
   "help.emailLabel": "Alamat E-mel",
-  "help.emailValue": "support@trustbank.com",
+  "help.emailValue": "support@easybank.com",
   "help.emailNote": "Kami membalas dalam 24 jam",
 
   "account.title": "Akaun Peribadi",
@@ -51,7 +52,7 @@
   "account.updatePasswordButton": "Kemas Kini Kata Laluan",
 
   "account.changeLimit": "Tukar Had Transaksi",
-  "account.newLimitLabel": "Had Baru (Minimum: $10)",
+  "account.newLimitLabel": "Had Baru (Minimum: RM 10)",
   "account.newLimitPlaceholder": "Masukkan had baru",
   "account.updateLimitButton": "Kemas Kini Had",
 
@@ -67,7 +68,23 @@
   "error.fillAllFields": "Sila isi semua ruangan",
   "error.passwordsMismatch": "Kata laluan tidak sepadan",
   "error.passwordTooShort": "Kata laluan mesti sekurang-kurangnya 6 aksara",
-  "error.limitTooLow": "Had transaksi mesti sekurang-kurangnya $10",
+  "error.limitTooLow": "Had transaksi mesti sekurang-kurangnya RM 10",
   "success.passwordChanged": "Kata laluan berjaya ditukar!",
-  "success.limitUpdated": "Had transaksi berjaya dikemas kini!"
+  "success.limitUpdated": "Had transaksi berjaya dikemas kini!",
+
+  "ask.title": "Pembantu AI",
+  "ask.greeting": "Helo! Saya pembantu AI EasyBank anda. Bagaimana saya boleh membantu anda hari ini?",
+  "ask.transferDetails": "Saya menemui permintaan pemindahan berikut:",
+  "ask.recipientName": "Penerima",
+  "ask.accountNumber": "No. Akaun",
+  "ask.transferAmount": "Jumlah",
+  "ask.askPassword": "Sila taip kata laluan anda untuk mengesahkan dan melengkapkan pemindahan ini.",
+  "ask.processing": "Mengesahkan kata laluan anda dan memproses pemindahan...",
+  "ask.transferSuccess": "Pemindahan berjaya! Wang telah dihantar.",
+  "ask.anythingElse": "Ada apa-apa lagi yang boleh saya bantu?",
+  "ask.searchingContacts": "Mencari kenalan anda untuk \"Ahmad\"...",
+  "ask.multipleContacts": "Saya menemui beberapa kenalan bernama Ahmad. Yang mana satu anda ingin pindahkan?",
+  "ask.inputPlaceholder": "Taip mesej...",
+  "ask.passwordPlaceholder": "Masukkan kata laluan anda...",
+  "ask.voicePlaceholderText": "Pindahkan 250 ringgit kepada Ahmad"
 }
