@@ -8,12 +8,22 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
   const [recipientAccount, setRecipientAccount] = useState('');
   const [transferAmount, setTransferAmount] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [sendError, setSendError] = useState('');
 
   // Ask AI Chat states
   const [chatMessages, setChatMessages] = useState([]);
   const [chatInput, setChatInput] = useState('');
   const [chatStep, setChatStep] = useState(0);
   const [isRecording, setIsRecording] = useState(false);
+  const [selectedContact, setSelectedContact] = useState(null);
+
+  // Transaction history state
+  const [activityList, setActivityList] = useState([
+    { id: 'tx1', date: '2026-03-06', merchant: 'Supermarket', value: -67.80 },
+    { id: 'tx2', date: '2026-03-05', merchant: 'Social Security', value: 1850.00 },
+    { id: 'tx3', date: '2026-03-04', merchant: 'Medical Center', value: -35.50 },
+    { id: 'tx4', date: '2026-03-02', merchant: 'Electric Company', value: -98.25 }
+  ]);
 
   // Personal Account states
   const [newPassword, setNewPassword] = useState('');
@@ -37,6 +47,7 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
   ];
 
   const handleContactSelect = (contact) => {
+    setSelectedContact(contact);
     const newMessages = [
       ...chatMessages,
       { sender: 'user', text: contact.name },
@@ -82,14 +93,44 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
       return;
     } else if (chatStep === 2) {
       // User entered password, AI processes transfer
+      const aiTransferAmount = 250;
+      if (userData.accountBalance <= 0) {
+        newMessages.push({ sender: 'ai', text: t('ask.errorZeroBalance') });
+        newMessages.push({ sender: 'ai', text: t('ask.anythingElse') });
+        setChatMessages(newMessages);
+        setChatStep(0);
+        return;
+      }
+      if (aiTransferAmount > userData.accountBalance) {
+        newMessages.push({ sender: 'ai', text: t('ask.errorInsufficientBalance') });
+        newMessages.push({ sender: 'ai', text: t('ask.anythingElse') });
+        setChatMessages(newMessages);
+        setChatStep(0);
+        return;
+      }
+      if (aiTransferAmount > userData.transactionLimit) {
+        newMessages.push({ sender: 'ai', text: `${t('ask.errorExceedsLimit')} RM ${userData.transactionLimit.toFixed(2)}.` });
+        newMessages.push({ sender: 'ai', text: t('ask.anythingElse') });
+        setChatMessages(newMessages);
+        setChatStep(0);
+        return;
+      }
       newMessages.push({ sender: 'ai', text: t('ask.processing') });
       setChatStep(3);
       setChatMessages(newMessages);
       // Simulate delay then show success and allow more transactions
       setTimeout(() => {
+        const newBalance = userData.accountBalance - aiTransferAmount;
+        onUpdateUser({ accountBalance: newBalance });
+        const today = new Date().toISOString().split('T')[0];
+        setActivityList(prev => [
+          { id: 'tx' + Date.now(), date: today, merchant: selectedContact ? selectedContact.name : 'Transfer', value: -aiTransferAmount },
+          ...prev
+        ]);
+        const successMsg = `${t('ask.transferSuccessPart1')} RM ${aiTransferAmount.toFixed(2)} ${t('ask.transferSuccessPart2')} RM ${aiTransferAmount.toFixed(2)} ${t('ask.deductedMessage')} RM ${newBalance.toFixed(2)}.`;
         setChatMessages(prev => [
           ...prev,
-          { sender: 'ai', text: t('ask.transferSuccess') },
+          { sender: 'ai', text: successMsg },
           { sender: 'ai', text: t('ask.anythingElse') }
         ]);
         setChatStep(0);
@@ -148,12 +189,7 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
     setLimitSuccess(true);
   };
 
-  const activityList = [
-    { id: 'tx1', date: '2026-03-06', merchant: 'Supermarket', value: -67.80 },
-    { id: 'tx2', date: '2026-03-05', merchant: 'Social Security', value: 1850.00 },
-    { id: 'tx3', date: '2026-03-04', merchant: 'Medical Center', value: -35.50 },
-    { id: 'tx4', date: '2026-03-02', merchant: 'Electric Company', value: -98.25 }
-  ];
+  // activityList is now managed via useState above
 
   return (
     <div className="main-dashboard">
@@ -243,7 +279,21 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
             <h2>{t('send.title')}</h2>
             <form className="payment-form" onSubmit={(e) => {
               e.preventDefault();
+              setSendError('');
               if (recipientAccount && transferAmount) {
+                const amount = parseFloat(transferAmount);
+                if (userData.accountBalance <= 0) {
+                  setSendError('error.zeroBalance');
+                  return;
+                }
+                if (amount > userData.accountBalance) {
+                  setSendError('error.insufficientBalance');
+                  return;
+                }
+                if (amount > userData.transactionLimit) {
+                  setSendError('error.exceedsLimit');
+                  return;
+                }
                 setShowConfirmation(true);
               }
             }}>
@@ -272,6 +322,7 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                   }}
                 />
               </div>
+              {sendError && <div className="error-message">{t(sendError)} {sendError === 'error.exceedsLimit' ? `RM ${userData.transactionLimit.toFixed(2)}` : ''}</div>}
               <button type="submit" className="send-btn">{t('send.submitButton')}</button>
             </form>
           </div>
@@ -474,10 +525,16 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
               <button
                 className="confirm-btn"
                 onClick={() => {
+                  const amount = parseFloat(transferAmount);
+                  onUpdateUser({ accountBalance: userData.accountBalance - amount });
+                  const today = new Date().toISOString().split('T')[0];
+                  setActivityList(prev => [
+                    { id: 'tx' + Date.now(), date: today, merchant: recipientAccount, value: -amount },
+                    ...prev
+                  ]);
                   setShowConfirmation(false);
                   setRecipientAccount('');
                   setTransferAmount('');
-                  alert(t('alert.transferSuccess'));
                   setCurrentScreen('overview');
                 }}
               >
