@@ -2,20 +2,46 @@ import { useState } from 'react';
 import { useTranslation } from '../i18n/LanguageContext';
 import './Dashboard.css';
 import LanguageSelector from './LanguageSelector';
+import FamilyAssistPage from './FamilyAssistPage';
+
+// Contact book: 2 contacts per letter A-Z
+const CONTACT_BOOK = [
+  { id: 1, name: 'Aaron Tan' }, { id: 2, name: 'Aisyah binti Ahmad' },
+  { id: 3, name: 'Benjamin Chong' }, { id: 4, name: 'Bella Yap' },
+  { id: 5, name: 'Calvin Lee' }, { id: 6, name: 'Catherine Wong' },
+  { id: 7, name: 'David Lim' }, { id: 8, name: 'Diana Raj' },
+  { id: 9, name: 'Edwin Ong' }, { id: 10, name: 'Emily Chan' },
+  { id: 11, name: 'Faizal bin Osman' }, { id: 12, name: 'Fiona Tan' },
+  { id: 13, name: 'George Ng' }, { id: 14, name: 'Grace Koh' },
+  { id: 15, name: 'Hassan bin Ali' }, { id: 16, name: 'Hannah Liew' },
+  { id: 17, name: 'Isaac Teo' }, { id: 18, name: 'Irene Goh' },
+  { id: 19, name: 'Jason Yong' }, { id: 20, name: 'Jenny Lau' },
+  { id: 21, name: 'Kevin Sim' }, { id: 22, name: 'Karen Foo' },
+  { id: 23, name: 'Leonard Ho' }, { id: 24, name: 'Linda Chin' },
+  { id: 25, name: 'Marcus Tan' }, { id: 26, name: 'May Ling' },
+  { id: 27, name: 'Nathan Loh' }, { id: 28, name: 'Nancy Yew' },
+  { id: 29, name: 'Oliver Pang' }, { id: 30, name: 'Olivia Chua' },
+  { id: 31, name: 'Patrick Low' }, { id: 32, name: 'Priya Nair' },
+  { id: 33, name: 'Qasim bin Razak' }, { id: 34, name: 'Queenie Soh' },
+  { id: 35, name: 'Raymond Gan' }, { id: 36, name: 'Rachel Teh' },
+  { id: 37, name: 'Sarah Lai' }, { id: 38, name: 'Sarah Lew' },
+  { id: 39, name: 'Timothy Chia' }, { id: 40, name: 'Tina Ooi' },
+  { id: 41, name: 'Umar bin Yusof' }, { id: 42, name: 'Uma Devi' },
+  { id: 43, name: 'Vincent Heng' }, { id: 44, name: 'Vivian Khoo' },
+  { id: 45, name: 'William Tan' }, { id: 46, name: 'Wendy Chew' },
+  { id: 47, name: 'Xavier Lim' }, { id: 48, name: 'Xin Yi Tong' },
+  { id: 49, name: 'Yazid bin Ismail' }, { id: 50, name: 'Yvonne Seah' },
+  { id: 51, name: 'Zahir bin Hamid' }, { id: 52, name: 'Zoe Ang' },
+];
 
 function Dashboard({ userData, onSignOut, onUpdateUser }) {
   const [currentScreen, setCurrentScreen] = useState('overview');
-  const [recipientAccount, setRecipientAccount] = useState('');
+  const [recipientName, setRecipientName] = useState('');
+  const [selectedRecipient, setSelectedRecipient] = useState(null);
   const [transferAmount, setTransferAmount] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [sendError, setSendError] = useState('');
-
-  // Ask AI Chat states
-  const [chatMessages, setChatMessages] = useState([]);
-  const [chatInput, setChatInput] = useState('');
-  const [chatStep, setChatStep] = useState(0);
-  const [isRecording, setIsRecording] = useState(false);
-  const [selectedContact, setSelectedContact] = useState(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   // Transaction history state
   const [activityList, setActivityList] = useState([
@@ -24,6 +50,9 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
     { id: 'tx3', date: '2026-03-04', merchant: 'Medical Center', value: -35.50 },
     { id: 'tx4', date: '2026-03-02', merchant: 'Electric Company', value: -98.25 }
   ]);
+
+  // Voice Assist state
+  const [voiceAssistEnabled, setVoiceAssistEnabled] = useState(true);
 
   // Personal Account states
   const [newPin, setNewPin] = useState('');
@@ -36,117 +65,36 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
 
   const { t } = useTranslation();
 
+  const speakMessage = (text) => {
+    if (!voiceAssistEnabled) return;
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.85;
+    utterance.pitch = 1;
+    window.speechSynthesis.speak(utterance);
+  };
+
   const censorPin = (pin) => {
     return '*'.repeat(pin.length);
   };
 
-  const contacts = [
-    { id: 1, name: 'Ahmad bin Ibrahim', account: '7721-0034-8891', bank: 'EasyBank' },
-    { id: 2, name: 'Ahmad Rizal', account: '5510-2287-4430', bank: 'MayBank' },
-    { id: 3, name: 'Ahmad Faizal bin Osman', account: '6639-1102-7765', bank: 'CIMB' },
-  ];
+  // Filter contacts based on typed name
+  const filteredContacts = recipientName.trim().length > 0
+    ? CONTACT_BOOK.filter(c => c.name.toLowerCase().includes(recipientName.toLowerCase()))
+    : [];
 
-  const handleContactSelect = (contact) => {
-    setSelectedContact(contact);
-    const newMessages = [
-      ...chatMessages,
-      { sender: 'user', text: contact.name },
-      {
-        sender: 'ai',
-        text: t('ask.transferDetails'),
-        isTransfer: true,
-        details: {
-          name: contact.name,
-          account: contact.account,
-          amount: 'RM 250.00'
-        }
-      },
-      { sender: 'ai', text: t('ask.askPin') }
-    ];
-    setChatMessages(newMessages);
-    setChatStep(2);
+  const handleNameChange = (e) => {
+    setRecipientName(e.target.value);
+    setSelectedRecipient(null);
+    setShowSuggestions(true);
   };
 
-  const handleChatSend = () => {
-    if (!chatInput.trim()) return;
-    const userMsg = { sender: 'user', text: chatInput };
-    const newMessages = [...chatMessages, userMsg];
-    setChatInput('');
-
-    if (chatStep === 0) {
-      // After greeting, AI searches contacts and finds multiple Ahmads
-      newMessages.push({ sender: 'ai', text: t('ask.searchingContacts') });
-      setChatStep(1);
-      setChatMessages(newMessages);
-      // Simulate search delay
-      setTimeout(() => {
-        setChatMessages(prev => [
-          ...prev,
-          {
-            sender: 'ai',
-            text: t('ask.multipleContacts'),
-            isContactList: true,
-            contacts: contacts
-          }
-        ]);
-      }, 1000);
-      return;
-    } else if (chatStep === 2) {
-      // User entered password, AI processes transfer
-      const aiTransferAmount = 250;
-      if (userData.accountBalance <= 0) {
-        newMessages.push({ sender: 'ai', text: t('ask.errorZeroBalance') });
-        newMessages.push({ sender: 'ai', text: t('ask.anythingElse') });
-        setChatMessages(newMessages);
-        setChatStep(0);
-        return;
-      }
-      if (aiTransferAmount > userData.accountBalance) {
-        newMessages.push({ sender: 'ai', text: t('ask.errorInsufficientBalance') });
-        newMessages.push({ sender: 'ai', text: t('ask.anythingElse') });
-        setChatMessages(newMessages);
-        setChatStep(0);
-        return;
-      }
-      if (aiTransferAmount > userData.transactionLimit) {
-        newMessages.push({ sender: 'ai', text: `${t('ask.errorExceedsLimit')} RM ${userData.transactionLimit.toFixed(2)}.` });
-        newMessages.push({ sender: 'ai', text: t('ask.anythingElse') });
-        setChatMessages(newMessages);
-        setChatStep(0);
-        return;
-      }
-      newMessages.push({ sender: 'ai', text: t('ask.processing') });
-      setChatStep(3);
-      setChatMessages(newMessages);
-      // Simulate delay then show success and allow more transactions
-      setTimeout(() => {
-        const newBalance = userData.accountBalance - aiTransferAmount;
-        onUpdateUser({ accountBalance: newBalance });
-        const today = new Date().toISOString().split('T')[0];
-        setActivityList(prev => [
-          { id: 'tx' + Date.now(), date: today, merchant: selectedContact ? selectedContact.name : 'Transfer', value: -aiTransferAmount },
-          ...prev
-        ]);
-        const successMsg = `${t('ask.transferSuccessPart1')} RM ${aiTransferAmount.toFixed(2)} ${t('ask.transferSuccessPart2')} RM ${aiTransferAmount.toFixed(2)} ${t('ask.deductedMessage')} RM ${newBalance.toFixed(2)}.`;
-        setChatMessages(prev => [
-          ...prev,
-          { sender: 'ai', text: successMsg },
-          { sender: 'ai', text: t('ask.anythingElse') }
-        ]);
-        setChatStep(0);
-      }, 1500);
-      return;
-    }
-
-    setChatMessages(newMessages);
-  };
-
-  const handleVoiceRecord = () => {
-    setIsRecording(!isRecording);
-    if (isRecording) {
-      // Simulate voice input converting to text
-      setChatInput(t('ask.voicePlaceholderText'));
-    }
+  const handleSelectContact = (contact) => {
+    setRecipientName(contact.name);
+    setSelectedRecipient(contact);
+    setShowSuggestions(false);
   };
 
   const handlePinChange = (e) => {
@@ -189,8 +137,6 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
     setLimitSuccess(true);
   };
 
-  // activityList is now managed via useState above
-
   return (
     <div className="main-dashboard">
       <header className="top-bar">
@@ -199,6 +145,15 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
           <LanguageSelector />
         </div>
         <div className="user-section">
+          <button onClick={() => {
+            setCurrentScreen('account');
+            setPinSuccess(false);
+            setPinError('');
+            setLimitSuccess(false);
+            setLimitError('');
+          }} className="profile-btn" aria-label="Personal Account">
+            👤
+          </button>
           <button onClick={onSignOut} className="exit-btn">{t('dashboard.logOut')}</button>
         </div>
       </header>
@@ -213,7 +168,13 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
             </div>
 
             <div className="action-grid">
-              <button className="feature-btn" onClick={() => setCurrentScreen('send')}>
+              <button className="feature-btn" onClick={() => {
+                setCurrentScreen('send');
+                setRecipientName('');
+                setSelectedRecipient(null);
+                setTransferAmount('');
+                setSendError('');
+              }}>
                 <span className="feature-emoji">💰</span>
                 <span className="feature-label">{t('overview.sendMoney')}</span>
               </button>
@@ -221,35 +182,16 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                 <span className="feature-emoji">📊</span>
                 <span className="feature-label">{t('overview.history')}</span>
               </button>
-              <button className="feature-btn" onClick={() => {
-                setCurrentScreen('account');
-                setPinSuccess(false);
-                setPinError('');
-                setLimitSuccess(false);
-                setLimitError('');
-              }}>
-                <span className="feature-emoji">👤</span>
-                <span className="feature-label">{t('overview.personalAccount')}</span>
-              </button>
-              <button className="feature-btn" onClick={() => {
-                setCurrentScreen('ask');
-                setChatMessages([{ sender: 'ai', text: t('ask.greeting') }]);
-                setChatStep(0);
-                setChatInput('');
-              }}>
-                <span className="feature-emoji">🤖</span>
-                <span className="feature-label">{t('overview.askAI')}</span>
-              </button>
-              <button className="feature-btn" onClick={() => setCurrentScreen('help')}>
-                <span className="feature-emoji">☎️</span>
-                <span className="feature-label">{t('overview.getHelp')}</span>
+              <button className="feature-btn" onClick={() => setCurrentScreen('familyAssist')}>
+                <span className="feature-emoji">👨‍👩‍👦</span>
+                <span className="feature-label">{t('overview.familyAssist')}</span>
               </button>
             </div>
           </>
         )}
 
         {currentScreen === 'history' && (
-          <div className="history-screen">
+          <div className="history-screen fullpage-screen">
             <button onClick={() => setCurrentScreen('overview')} className="return-btn">
               {t('common.returnHome')}
             </button>
@@ -271,15 +213,30 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
         )}
 
         {currentScreen === 'send' && (
-          <div className="send-screen">
+          <div className="send-screen fullpage-screen">
             <button onClick={() => setCurrentScreen('overview')} className="return-btn">
               {t('common.returnHome')}
             </button>
             <h2>{t('send.title')}</h2>
+
+            <div className="voice-toggle-row">
+              <div className="voice-toggle-info">
+                <span className="voice-toggle-icon">🔊</span>
+                <span className="voice-toggle-label">{t('voice.assistLabel')}</span>
+              </div>
+              <button
+                className={`voice-toggle-switch ${voiceAssistEnabled ? 'on' : 'off'}`}
+                onClick={() => setVoiceAssistEnabled(prev => !prev)}
+                aria-label="Toggle Voice Assist"
+              >
+                <span className="voice-toggle-knob" />
+              </button>
+            </div>
+
             <form className="payment-form" onSubmit={(e) => {
               e.preventDefault();
               setSendError('');
-              if (recipientAccount && transferAmount) {
+              if (selectedRecipient && transferAmount) {
                 const amount = parseFloat(transferAmount);
                 if (userData.accountBalance <= 0) {
                   setSendError('error.zeroBalance');
@@ -294,16 +251,41 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                   return;
                 }
                 setShowConfirmation(true);
+                speakMessage(`You are about to pay RM ${amount} to ${selectedRecipient.name}. Do you want to continue?`);
               }
             }}>
               <div className="field-group">
                 <label>{t('send.recipientLabel')}</label>
-                <input
-                  type="text"
-                  placeholder={t('send.recipientPlaceholder')}
-                  value={recipientAccount}
-                  onChange={(e) => setRecipientAccount(e.target.value)}
-                />
+                <div className="name-search-wrapper">
+                  <input
+                    type="text"
+                    placeholder={t('send.recipientPlaceholder')}
+                    value={recipientName}
+                    onChange={handleNameChange}
+                    onFocus={() => setShowSuggestions(true)}
+                    autoComplete="off"
+                  />
+                  {showSuggestions && filteredContacts.length > 0 && !selectedRecipient && (
+                    <div className="name-suggestions">
+                      {filteredContacts.slice(0, 5).map(contact => (
+                        <button
+                          key={contact.id}
+                          type="button"
+                          className="suggestion-item"
+                          onClick={() => handleSelectContact(contact)}
+                        >
+                          <span className="suggestion-avatar">👤</span>
+                          <span className="suggestion-name">{contact.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {selectedRecipient && (
+                  <div className="selected-contact-badge">
+                    ✅ {selectedRecipient.name}
+                  </div>
+                )}
               </div>
               <div className="field-group">
                 <label>{t('send.amountLabel')}</label>
@@ -322,113 +304,16 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                 />
               </div>
               {sendError && <div className="error-message">{t(sendError)} {sendError === 'error.exceedsLimit' ? `RM ${userData.transactionLimit.toFixed(2)}` : ''}</div>}
-              <button type="submit" className="send-btn">{t('send.submitButton')}</button>
+              <button type="submit" className="send-btn" disabled={!selectedRecipient}>{t('send.submitButton')}</button>
             </form>
           </div>
         )}
 
-        {currentScreen === 'help' && (
-          <div className="help-screen">
-            <button onClick={() => setCurrentScreen('overview')} className="return-btn">
-              {t('common.returnHome')}
-            </button>
-            <h2>{t('help.title')}</h2>
-            <div className="contact-info">
-              <div className="contact-card">
-                <div className="contact-icon">📞</div>
-                <div className="contact-details">
-                  <div className="contact-label">{t('help.phoneLabel')}</div>
-                  <div className="contact-value">{t('help.phoneValue')}</div>
-                  <div className="contact-note">{t('help.phoneNote')}</div>
-                </div>
-              </div>
-              <div className="contact-card">
-                <div className="contact-icon">✉️</div>
-                <div className="contact-details">
-                  <div className="contact-label">{t('help.emailLabel')}</div>
-                  <div className="contact-value">{t('help.emailValue')}</div>
-                  <div className="contact-note">{t('help.emailNote')}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {currentScreen === 'ask' && (
-          <div className="ask-screen">
-            <button onClick={() => setCurrentScreen('overview')} className="return-btn">
-              {t('common.returnHome')}
-            </button>
-            <h2>{t('ask.title')}</h2>
-
-            <div className="chat-container">
-              <div className="chat-messages">
-                {chatMessages.map((msg, idx) => (
-                  <div key={idx} className={`chat-bubble ${msg.sender}`}>
-                    {msg.sender === 'ai' && <div className="chat-avatar">🤖</div>}
-                    <div className="chat-content">
-                      {msg.isContactList ? (
-                        <div className="contact-select-list">
-                          <div className="contact-select-header">{msg.text}</div>
-                          {msg.contacts.map(contact => (
-                            <button
-                              key={contact.id}
-                              className="contact-select-btn"
-                              onClick={() => handleContactSelect(contact)}
-                            >
-                              <div className="contact-select-name">{contact.name}</div>
-                              <div className="contact-select-info">{contact.account} · {contact.bank}</div>
-                            </button>
-                          ))}
-                        </div>
-                      ) : msg.isTransfer ? (
-                        <div className="transfer-card">
-                          <div className="transfer-header">{msg.text}</div>
-                          <div className="transfer-detail">
-                            <span className="transfer-label">{t('ask.recipientName')}</span>
-                            <span className="transfer-value">{msg.details.name}</span>
-                          </div>
-                          <div className="transfer-detail">
-                            <span className="transfer-label">{t('ask.accountNumber')}</span>
-                            <span className="transfer-value">{msg.details.account}</span>
-                          </div>
-                          <div className="transfer-detail">
-                            <span className="transfer-label">{t('ask.transferAmount')}</span>
-                            <span className="transfer-value amount">{msg.details.amount}</span>
-                          </div>
-                        </div>
-                      ) : (
-                        <span>{msg.text}</span>
-                      )}
-                    </div>
-                    {msg.sender === 'user' && <div className="chat-avatar user-avatar">👤</div>}
-                  </div>
-                ))}
-              </div>
-
-              {chatStep !== 1 && (
-                <div className="chat-input-area">
-                  <input
-                    type={chatStep === 2 ? 'password' : 'text'}
-                    className="chat-input"
-                    placeholder={chatStep === 2 ? t('ask.pinPlaceholder') : t('ask.inputPlaceholder')}
-                    value={chatInput}
-                    onChange={(e) => setChatInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleChatSend()}
-                  />
-                  <button
-                    className={`voice-btn ${isRecording ? 'recording' : ''}`}
-                    onClick={handleVoiceRecord}
-                  >
-                    {isRecording ? '⏹️' : '🎤'}
-                  </button>
-                  <button className="chat-send-btn" onClick={handleChatSend}>
-                    ➤
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+        {currentScreen === 'familyAssist' && (
+          <FamilyAssistPage
+            accountBalance={userData.accountBalance}
+            onBack={() => setCurrentScreen('overview')}
+          />
         )}
 
         {currentScreen === 'account' && (
@@ -515,11 +400,11 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
         <div className="confirmation-overlay">
           <div className="confirmation-dialog">
             <h3>{t('confirm.title')}</h3>
-            <p>{t('confirm.message')} <strong>RM {transferAmount}</strong> {t('confirm.to')} <strong>{recipientAccount}</strong>?</p>
+            <p>{t('confirm.message')} <strong>RM {transferAmount}</strong> {t('confirm.to')} <strong>{selectedRecipient?.name}</strong>?</p>
             <div className="confirmation-buttons">
               <button
                 className="cancel-btn"
-                onClick={() => setShowConfirmation(false)}
+                onClick={() => { window.speechSynthesis && window.speechSynthesis.cancel(); setShowConfirmation(false); }}
               >
                 {t('confirm.cancelButton')}
               </button>
@@ -530,11 +415,13 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                   onUpdateUser({ accountBalance: userData.accountBalance - amount });
                   const today = new Date().toISOString().split('T')[0];
                   setActivityList(prev => [
-                    { id: 'tx' + Date.now(), date: today, merchant: recipientAccount, value: -amount },
+                    { id: 'tx' + Date.now(), date: today, merchant: selectedRecipient?.name || 'Transfer', value: -amount },
                     ...prev
                   ]);
+                  speakMessage(`You paid RM ${amount} to ${selectedRecipient?.name}`);
                   setShowConfirmation(false);
-                  setRecipientAccount('');
+                  setRecipientName('');
+                  setSelectedRecipient(null);
                   setTransferAmount('');
                   setCurrentScreen('overview');
                 }}

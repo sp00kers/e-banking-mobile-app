@@ -1,0 +1,526 @@
+/* ===== Family Assist Page ===== */
+.family-assist-screen {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.family-assist-header {
+  margin-bottom: 28px;
+}
+
+.family-assist-header h2 {
+  font-size: 40px;
+  color: #1a5490;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+/* Toggle Card */
+.family-toggle-card {
+  background: linear-gradient(135deg, #f0f4f8 0%, #e8ecf0 100%);
+  border: 3px solid #d0d7de;
+  border-radius: 16px;
+  padding: 26px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.toggle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.toggle-label {
+  font-size: 26px;
+  font-weight: 700;
+  color: #222;
+}
+
+.toggle-status {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.toggle-status.enabled {
+  color: #22863a;
+}
+
+.toggle-status.disabled {
+  color: #cb2431;
+}
+
+.toggle-switch {
+  width: 72px;
+  height: 40px;
+  border-radius: 20px;
+  border: 3px solid #d0d7de;
+  background: #d0d7de;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.35s ease;
+  flex-shrink: 0;
+}
+
+.toggle-switch.on {
+  background: #22863a;
+  border-color: #22863a;
+}
+
+.toggle-switch.off {
+  background: #cb2431;
+  border-color: #cb2431;
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.35s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch.on .toggle-knob {
+  transform: translateX(32px);
+}
+
+/* Section Cards */
+.family-section-card {
+  background: #fff;
+  border: 3px solid #d0d7de;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.family-section-card h3 {
+  font-size: 30px;
+  color: #1a5490;
+  font-weight: 800;
+  margin-bottom: 22px;
+}
+
+.family-section-card h4 {
+  font-size: 26px;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+/* Family Members List */
+.family-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.family-member-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 24px 24px;
+  background: #f8f9fa;
+  border: 3px solid #e8ecf0;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.family-member-row:hover:not(:disabled) {
+  border-color: #1a5490;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(26, 84, 144, 0.15);
+}
+
+.family-member-row.selected {
+  border-color: #1a5490;
+  background: #e8f0fe;
+  box-shadow: 0 4px 12px rgba(26, 84, 144, 0.2);
+}
+
+.family-member-row.disconnected {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.member-avatar {
+  font-size: 42px;
+  flex-shrink: 0;
+}
+
+.member-info {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.member-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+}
+
+.member-relation {
+  font-size: 24px;
+  color: #666;
+  font-weight: 500;
+}
+
+.member-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.member-dot.dot-green {
+  background: #22863a;
+  box-shadow: 0 0 6px rgba(34, 134, 58, 0.4);
+}
+
+.member-dot.dot-red {
+  background: #cb2431;
+  box-shadow: 0 0 6px rgba(203, 36, 49, 0.4);
+}
+
+/* Add Member */
+.add-member-btn {
+  width: 100%;
+  padding: 22px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a5490;
+  background: #e8f0fe;
+  border: 3px dashed #1a5490;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-member-btn:hover {
+  background: #d0e3fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 84, 144, 0.15);
+}
+
+.add-member-form {
+  background: #f8f9fa;
+  border: 3px solid #d0d7de;
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.add-member-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.add-member-input {
+  padding: 20px 18px;
+  font-size: 24px;
+  border: 3px solid #d0d7de;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.add-member-input:focus {
+  outline: none;
+  border-color: #1a5490;
+  box-shadow: 0 0 0 3px rgba(26, 84, 144, 0.1);
+}
+
+.add-member-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.add-confirm-btn {
+  flex: 1;
+  padding: 18px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  background: #22863a;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-confirm-btn:hover {
+  background: #1a6b2e;
+  transform: translateY(-2px);
+}
+
+.add-cancel-btn {
+  flex: 1;
+  padding: 18px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  background: #e8ecf0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-cancel-btn:hover {
+  background: #d0d7de;
+}
+
+/* Viewer Panel */
+.viewer-panel {
+  border-color: #1a5490;
+  background: linear-gradient(135deg, #f8fbff 0%, #eef4fb 100%);
+}
+
+.view-only-badge {
+  background: #fff3cd;
+  border: 3px solid #ffc107;
+  color: #856404;
+  padding: 18px 22px;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.viewer-balance-card {
+  background: #fff;
+  border: 3px solid #d0d7de;
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.viewer-balance-label {
+  font-size: 24px;
+  color: #555;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.viewer-balance-value {
+  font-size: 54px;
+  font-weight: 900;
+  color: #1a5490;
+  letter-spacing: -1px;
+}
+
+.viewer-transactions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.viewer-tx-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  background: #fff;
+  border-radius: 12px;
+  border-left: 5px solid #1a5490;
+}
+
+.viewer-tx-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.viewer-tx-desc {
+  font-size: 24px;
+  font-weight: 700;
+  color: #222;
+}
+
+.viewer-tx-date {
+  font-size: 20px;
+  color: #888;
+}
+
+.viewer-tx-amount {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.viewer-tx-amount.credit {
+  color: #22863a;
+}
+
+.viewer-tx-amount.debit {
+  color: #cb2431;
+}
+
+/* Safety Controls */
+.safety-section {
+  border-color: #ffc107;
+  background: linear-gradient(135deg, #fffdf5 0%, #fff8e1 100%);
+}
+
+.safety-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.safety-btn {
+  width: 100%;
+  padding: 22px;
+  font-size: 22px;
+  font-weight: 800;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.safety-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.safety-btn.remove-btn {
+  background: #fff;
+  color: #cb2431;
+  border: 3px solid #cb2431;
+}
+
+.safety-btn.remove-btn:hover:not(:disabled) {
+  background: #ffeef0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(203, 36, 49, 0.2);
+}
+
+.safety-btn.emergency-btn {
+  background: #cb2431;
+  color: #fff;
+}
+
+.safety-btn.emergency-btn:hover {
+  background: #a31d28;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(203, 36, 49, 0.35);
+}
+
+/* Activity Log */
+.activity-log-section h3 {
+  color: #333;
+}
+
+.activity-log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.activity-log-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 22px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 5px solid #1a5490;
+}
+
+.log-icon {
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.log-text {
+  flex: 1;
+  font-size: 24px;
+  color: #222;
+  font-weight: 700;
+}
+
+.log-time {
+  font-size: 20px;
+  color: #888;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Confirm Dialog Overrides */
+.family-confirm-dialog {
+  max-width: 440px;
+}
+
+.family-confirm-icon {
+  font-size: 56px;
+  margin-bottom: 16px;
+}
+
+.emergency-confirm {
+  background: #cb2431 !important;
+}
+
+.emergency-confirm:hover {
+  background: #a31d28 !important;
+}
+
+/* Responsive / Mobile */
+@media (max-width: 600px) {
+  .family-assist-screen {
+    padding: 20px;
+  }
+
+  .family-assist-header h2 {
+    font-size: 28px;
+  }
+
+  .family-toggle-card {
+    padding: 18px 20px;
+  }
+
+  .family-section-card {
+    padding: 20px;
+  }
+
+  .family-section-card h3 {
+    font-size: 22px;
+  }
+
+  .viewer-balance-value {
+    font-size: 38px;
+  }
+
+  .member-status {
+    font-size: 14px;
+  }
+
+  .safety-btn {
+    font-size: 19px;
+    padding: 18px;
+  }
+
+  .add-member-actions {
+    flex-direction: column;
+  }
+}
