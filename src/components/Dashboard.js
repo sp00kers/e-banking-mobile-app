@@ -459,9 +459,10 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                       type="password"
                       placeholder={t('account.newPinPlaceholder')}
                       value={newPin}
-                      onChange={(e) => setNewPin(e.target.value)}
+                      onChange={(e) => setNewPin(e.target.value.replace(/\D/g, '').slice(0, 6))}
                       inputMode="numeric"
                       maxLength={6}
+                      pattern="[0-9]*"
                     />
                   </div>
                   <div className="field-group">
@@ -470,9 +471,10 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                       type="password"
                       placeholder={t('account.confirmPinPlaceholder')}
                       value={confirmPin}
-                      onChange={(e) => setConfirmPin(e.target.value)}
+                      onChange={(e) => setConfirmPin(e.target.value.replace(/\D/g, '').slice(0, 6))}
                       inputMode="numeric"
                       maxLength={6}
+                      pattern="[0-9]*"
                     />
                   </div>
                   {pinError && <div className="error-message">{t(pinError)}</div>}

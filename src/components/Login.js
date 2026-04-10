@@ -5,13 +5,22 @@ import './Login.css';
 
 function Login({ onLoginSuccess }) {
   const [pinInput, setPinInput] = useState('');
+  const [pinWarning, setPinWarning] = useState('');
   const { t } = useTranslation();
+
+  const handlePinInput = (e) => {
+    const value = e.target.value.replace(/\D/g, '').slice(0, 6);
+    setPinInput(value);
+    setPinWarning('');
+  };
 
   const submitForm = (event) => {
     event.preventDefault();
-    if (pinInput.trim()) {
-      onLoginSuccess(pinInput);
+    if (pinInput.length < 6) {
+      setPinWarning('error.pinTooShort');
+      return;
     }
+    onLoginSuccess(pinInput);
   };
 
   return (
@@ -33,13 +42,16 @@ function Login({ onLoginSuccess }) {
               id="pin"
               type="password"
               value={pinInput}
-              onChange={(e) => setPinInput(e.target.value)}
+              onChange={handlePinInput}
               placeholder={t('login.pinPlaceholder')}
               autoComplete="off"
               inputMode="numeric"
               maxLength={6}
+              pattern="[0-9]*"
             />
           </div>
+
+          {pinWarning && <div className="error-message">{t(pinWarning)}</div>}
 
           <button type="submit" className="signin-btn">
             {t('login.submitButton')}
