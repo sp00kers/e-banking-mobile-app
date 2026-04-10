@@ -2,10 +2,8 @@
   "app.bankName": "EasyBank",
 
   "login.subtitle": "Perbankan Mudah",
-  "login.usernameLabel": "Nama Pengguna Anda",
-  "login.usernamePlaceholder": "Taip nama pengguna anda",
-  "login.passwordLabel": "Kata Laluan Anda",
-  "login.passwordPlaceholder": "Taip kata laluan anda",
+  "login.pinLabel": "PIN Anda",
+  "login.pinPlaceholder": "Masukkan PIN 6 digit anda",
   "login.submitButton": "Log Masuk Akaun Anda",
   "login.supportText": "Soalan? Hubungi 1-888-555-2679",
 
@@ -40,16 +38,15 @@
   "help.emailNote": "Kami membalas dalam 24 jam",
 
   "account.title": "Akaun Peribadi",
-  "account.usernameLabel": "Nama Pengguna",
-  "account.passwordLabel": "Kata Laluan",
+  "account.pinLabel": "PIN",
   "account.transactionLimitLabel": "Had Transaksi",
 
-  "account.changePassword": "Tukar Kata Laluan",
-  "account.newPasswordLabel": "Kata Laluan Baru",
-  "account.newPasswordPlaceholder": "Masukkan kata laluan baru",
-  "account.confirmPasswordLabel": "Sahkan Kata Laluan",
-  "account.confirmPasswordPlaceholder": "Sahkan kata laluan baru",
-  "account.updatePasswordButton": "Kemas Kini Kata Laluan",
+  "account.changePin": "Tukar PIN",
+  "account.newPinLabel": "PIN Baru",
+  "account.newPinPlaceholder": "Masukkan PIN 6 digit baru",
+  "account.confirmPinLabel": "Sahkan PIN",
+  "account.confirmPinPlaceholder": "Sahkan PIN baru",
+  "account.updatePinButton": "Kemas Kini PIN",
 
   "account.changeLimit": "Tukar Had Transaksi",
   "account.newLimitLabel": "Had Baru (Minimum: RM 10)",
@@ -66,13 +63,13 @@
 
   "alert.transferSuccess": "Pemindahan berjaya!",
   "error.fillAllFields": "Sila isi semua ruangan",
-  "error.passwordsMismatch": "Kata laluan tidak sepadan",
-  "error.passwordTooShort": "Kata laluan mesti sekurang-kurangnya 6 aksara",
+  "error.pinsMismatch": "PIN tidak sepadan",
+  "error.pinTooShort": "PIN mesti sekurang-kurangnya 6 digit",
   "error.limitTooLow": "Had transaksi mesti sekurang-kurangnya RM 10",
   "error.zeroBalance": "Baki anda ialah RM 0. Anda tidak boleh membuat sebarang pemindahan.",
   "error.insufficientBalance": "Baki tidak mencukupi untuk pemindahan ini.",
   "error.exceedsLimit": "Jumlah pemindahan melebihi had transaksi anda sebanyak",
-  "success.passwordChanged": "Kata laluan berjaya ditukar!",
+  "success.pinChanged": "PIN berjaya ditukar!",
   "success.limitUpdated": "Had transaksi berjaya dikemas kini!",
 
   "ask.title": "Pembantu AI",
@@ -81,8 +78,8 @@
   "ask.recipientName": "Penerima",
   "ask.accountNumber": "No. Akaun",
   "ask.transferAmount": "Jumlah",
-  "ask.askPassword": "Sila taip kata laluan anda untuk mengesahkan dan melengkapkan pemindahan ini.",
-  "ask.processing": "Mengesahkan kata laluan anda dan memproses pemindahan...",
+  "ask.askPin": "Sila masukkan PIN anda untuk mengesahkan dan melengkapkan pemindahan ini.",
+  "ask.processing": "Mengesahkan PIN anda dan memproses pemindahan...",
   "ask.transferSuccess": "Pemindahan berjaya! Wang telah dihantar.",
   "ask.transferSuccessPart1": "Pemindahan sebanyak",
   "ask.transferSuccessPart2": "berjaya!",
@@ -94,6 +91,6 @@
   "ask.searchingContacts": "Mencari kenalan anda untuk \"Ahmad\"...",
   "ask.multipleContacts": "Saya menemui beberapa kenalan bernama Ahmad. Yang mana satu anda ingin pindahkan?",
   "ask.inputPlaceholder": "Taip mesej...",
-  "ask.passwordPlaceholder": "Masukkan kata laluan anda...",
+  "ask.pinPlaceholder": "Masukkan PIN anda...",
   "ask.voicePlaceholderText": "Pindahkan 250 ringgit kepada Ahmad"
 }

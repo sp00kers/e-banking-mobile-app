@@ -26,18 +26,18 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
   ]);
 
   // Personal Account states
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordSuccess, setPasswordSuccess] = useState(false);
-  const [passwordError, setPasswordError] = useState('');
+  const [newPin, setNewPin] = useState('');
+  const [confirmPin, setConfirmPin] = useState('');
+  const [pinSuccess, setPinSuccess] = useState(false);
+  const [pinError, setPinError] = useState('');
   const [newLimit, setNewLimit] = useState('');
   const [limitError, setLimitError] = useState('');
   const [limitSuccess, setLimitSuccess] = useState(false);
 
   const { t } = useTranslation();
 
-  const censorPassword = (password) => {
-    return '*'.repeat(password.length);
+  const censorPin = (pin) => {
+    return '*'.repeat(pin.length);
   };
 
   const contacts = [
@@ -61,7 +61,7 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
           amount: 'RM 250.00'
         }
       },
-      { sender: 'ai', text: t('ask.askPassword') }
+      { sender: 'ai', text: t('ask.askPin') }
     ];
     setChatMessages(newMessages);
     setChatStep(2);
@@ -149,28 +149,28 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
     }
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePinChange = (e) => {
     e.preventDefault();
-    setPasswordError('');
-    setPasswordSuccess(false);
+    setPinError('');
+    setPinSuccess(false);
 
-    if (!newPassword || !confirmPassword) {
-      setPasswordError('error.fillAllFields');
+    if (!newPin || !confirmPin) {
+      setPinError('error.fillAllFields');
       return;
     }
-    if (newPassword !== confirmPassword) {
-      setPasswordError('error.passwordsMismatch');
+    if (newPin !== confirmPin) {
+      setPinError('error.pinsMismatch');
       return;
     }
-    if (newPassword.length < 6) {
-      setPasswordError('error.passwordTooShort');
+    if (newPin.length < 6) {
+      setPinError('error.pinTooShort');
       return;
     }
 
-    onUpdateUser({ password: newPassword });
-    setNewPassword('');
-    setConfirmPassword('');
-    setPasswordSuccess(true);
+    onUpdateUser({ pin: newPin });
+    setNewPin('');
+    setConfirmPin('');
+    setPinSuccess(true);
   };
 
   const handleLimitChange = (e) => {
@@ -199,7 +199,6 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
           <LanguageSelector />
         </div>
         <div className="user-section">
-          <span className="greeting">{t('dashboard.greeting')}{userData.username}</span>
           <button onClick={onSignOut} className="exit-btn">{t('dashboard.logOut')}</button>
         </div>
       </header>
@@ -224,8 +223,8 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
               </button>
               <button className="feature-btn" onClick={() => {
                 setCurrentScreen('account');
-                setPasswordSuccess(false);
-                setPasswordError('');
+                setPinSuccess(false);
+                setPinError('');
                 setLimitSuccess(false);
                 setLimitError('');
               }}>
@@ -412,7 +411,7 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
                   <input
                     type={chatStep === 2 ? 'password' : 'text'}
                     className="chat-input"
-                    placeholder={chatStep === 2 ? t('ask.passwordPlaceholder') : t('ask.inputPlaceholder')}
+                    placeholder={chatStep === 2 ? t('ask.pinPlaceholder') : t('ask.inputPlaceholder')}
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleChatSend()}
@@ -441,12 +440,8 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
 
             <div className="account-info-section">
               <div className="account-info-card">
-                <div className="info-label">{t('account.usernameLabel')}</div>
-                <div className="info-value">{userData.username}</div>
-              </div>
-              <div className="account-info-card">
-                <div className="info-label">{t('account.passwordLabel')}</div>
-                <div className="info-value">{censorPassword(userData.password)}</div>
+                <div className="info-label">{t('account.pinLabel')}</div>
+                <div className="info-value">{censorPin(userData.pin)}</div>
               </div>
               <div className="account-info-card">
                 <div className="info-label">{t('account.transactionLimitLabel')}</div>
@@ -456,29 +451,33 @@ function Dashboard({ userData, onSignOut, onUpdateUser }) {
 
             <div className="account-settings-section">
               <div className="settings-card">
-                <h3>{t('account.changePassword')}</h3>
-                <form onSubmit={handlePasswordChange} className="settings-form">
+                <h3>{t('account.changePin')}</h3>
+                <form onSubmit={handlePinChange} className="settings-form">
                   <div className="field-group">
-                    <label>{t('account.newPasswordLabel')}</label>
+                    <label>{t('account.newPinLabel')}</label>
                     <input
                       type="password"
-                      placeholder={t('account.newPasswordPlaceholder')}
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder={t('account.newPinPlaceholder')}
+                      value={newPin}
+                      onChange={(e) => setNewPin(e.target.value)}
+                      inputMode="numeric"
+                      maxLength={6}
                     />
                   </div>
                   <div className="field-group">
-                    <label>{t('account.confirmPasswordLabel')}</label>
+                    <label>{t('account.confirmPinLabel')}</label>
                     <input
                       type="password"
-                      placeholder={t('account.confirmPasswordPlaceholder')}
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder={t('account.confirmPinPlaceholder')}
+                      value={confirmPin}
+                      onChange={(e) => setConfirmPin(e.target.value)}
+                      inputMode="numeric"
+                      maxLength={6}
                     />
                   </div>
-                  {passwordError && <div className="error-message">{t(passwordError)}</div>}
-                  {passwordSuccess && <div className="success-message">{t('success.passwordChanged')}</div>}
-                  <button type="submit" className="settings-btn">{t('account.updatePasswordButton')}</button>
+                  {pinError && <div className="error-message">{t(pinError)}</div>}
+                  {pinSuccess && <div className="success-message">{t('success.pinChanged')}</div>}
+                  <button type="submit" className="settings-btn">{t('account.updatePinButton')}</button>
                 </form>
               </div>
 

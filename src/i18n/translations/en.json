@@ -2,10 +2,8 @@
   "app.bankName": "EasyBank",
 
   "login.subtitle": "Banking Made Easy",
-  "login.usernameLabel": "Your Username",
-  "login.usernamePlaceholder": "Type your username",
-  "login.passwordLabel": "Your Password",
-  "login.passwordPlaceholder": "Type your password",
+  "login.pinLabel": "Your PIN",
+  "login.pinPlaceholder": "Enter your 6-digit PIN",
   "login.submitButton": "Login to Your Account",
   "login.supportText": "Questions? Call 1-888-555-2679",
 
@@ -40,16 +38,15 @@
   "help.emailNote": "We reply within 24 hours",
 
   "account.title": "Personal Account",
-  "account.usernameLabel": "Username",
-  "account.passwordLabel": "Password",
+  "account.pinLabel": "PIN",
   "account.transactionLimitLabel": "Transaction Limit",
 
-  "account.changePassword": "Change Password",
-  "account.newPasswordLabel": "New Password",
-  "account.newPasswordPlaceholder": "Enter new password",
-  "account.confirmPasswordLabel": "Confirm Password",
-  "account.confirmPasswordPlaceholder": "Confirm new password",
-  "account.updatePasswordButton": "Update Password",
+  "account.changePin": "Change PIN",
+  "account.newPinLabel": "New PIN",
+  "account.newPinPlaceholder": "Enter new 6-digit PIN",
+  "account.confirmPinLabel": "Confirm PIN",
+  "account.confirmPinPlaceholder": "Confirm new PIN",
+  "account.updatePinButton": "Update PIN",
 
   "account.changeLimit": "Change Transaction Limit",
   "account.newLimitLabel": "New Limit (Minimum: RM 10)",
@@ -66,13 +63,13 @@
 
   "alert.transferSuccess": "Transfer completed successfully!",
   "error.fillAllFields": "Please fill in all fields",
-  "error.passwordsMismatch": "Passwords do not match",
-  "error.passwordTooShort": "Password must be at least 6 characters",
+  "error.pinsMismatch": "PINs do not match",
+  "error.pinTooShort": "PIN must be at least 6 digits",
   "error.limitTooLow": "Transaction limit must be at least RM 10",
   "error.zeroBalance": "Your balance is RM 0. You cannot make any transfers.",
   "error.insufficientBalance": "Insufficient balance for this transfer.",
   "error.exceedsLimit": "Transfer amount exceeds your transaction limit of",
-  "success.passwordChanged": "Password changed successfully!",
+  "success.pinChanged": "PIN changed successfully!",
   "success.limitUpdated": "Transaction limit updated successfully!",
 
   "ask.title": "AI Assistant",
@@ -81,8 +78,8 @@
   "ask.recipientName": "Recipient",
   "ask.accountNumber": "Account No.",
   "ask.transferAmount": "Amount",
-  "ask.askPassword": "Please type your password to confirm and complete this transfer.",
-  "ask.processing": "Verifying your password and processing the transfer...",
+  "ask.askPin": "Please enter your PIN to confirm and complete this transfer.",
+  "ask.processing": "Verifying your PIN and processing the transfer...",
   "ask.transferSuccess": "Transfer completed successfully! The money has been sent.",
   "ask.transferSuccessPart1": "Transfer of",
   "ask.transferSuccessPart2": "completed!",
@@ -94,6 +91,6 @@
   "ask.searchingContacts": "Searching your contacts for \"Ahmad\"...",
   "ask.multipleContacts": "I found multiple contacts named Ahmad. Which one would you like to transfer to?",
   "ask.inputPlaceholder": "Type a message...",
-  "ask.passwordPlaceholder": "Enter your password...",
+  "ask.pinPlaceholder": "Enter your PIN...",
   "ask.voicePlaceholderText": "Transfer 250 ringgit to Ahmad"
 }

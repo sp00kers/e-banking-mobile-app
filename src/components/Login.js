@@ -4,14 +4,13 @@ import LanguageSelector from './LanguageSelector';
 import './Login.css';
 
 function Login({ onLoginSuccess }) {
-  const [userInput, setUserInput] = useState('');
-  const [passInput, setPassInput] = useState('');
+  const [pinInput, setPinInput] = useState('');
   const { t } = useTranslation();
 
   const submitForm = (event) => {
     event.preventDefault();
-    if (userInput.trim() && passInput.trim()) {
-      onLoginSuccess(userInput);
+    if (pinInput.trim()) {
+      onLoginSuccess(pinInput);
     }
   };
 
@@ -29,26 +28,16 @@ function Login({ onLoginSuccess }) {
 
         <form onSubmit={submitForm} className="auth-form">
           <div className="input-group">
-            <label htmlFor="user">{t('login.usernameLabel')}</label>
+            <label htmlFor="pin">{t('login.pinLabel')}</label>
             <input
-              id="user"
-              type="text"
-              value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
-              placeholder={t('login.usernamePlaceholder')}
-              autoComplete="username"
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="pass">{t('login.passwordLabel')}</label>
-            <input
-              id="pass"
+              id="pin"
               type="password"
-              value={passInput}
-              onChange={(e) => setPassInput(e.target.value)}
-              placeholder={t('login.passwordPlaceholder')}
-              autoComplete="current-password"
+              value={pinInput}
+              onChange={(e) => setPinInput(e.target.value)}
+              placeholder={t('login.pinPlaceholder')}
+              autoComplete="off"
+              inputMode="numeric"
+              maxLength={6}
             />
           </div>
 

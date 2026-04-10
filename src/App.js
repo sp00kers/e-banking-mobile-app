@@ -8,12 +8,11 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [language, setLanguage] = useState('en');
 
-  const loginHandler = (name) => {
+  const loginHandler = (pin) => {
     setCurrentUser({
-      username: name,
       accountBalance: 8725.40,
       accountNumber: '****5678',
-      password: 'mySecurePass123',
+      pin: pin,
       transactionLimit: 500
     });
   };
